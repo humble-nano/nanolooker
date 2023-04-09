@@ -13,11 +13,11 @@ import {
   Tooltip,
   Typography,
 } from "antd";
-import { SyncOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, SyncOutlined } from "@ant-design/icons";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import TimeAgo from "timeago-react";
 import BigNumber from "bignumber.js";
-import { rawToRai } from "components/utils";
+import { rawToRai, toBoolean } from "components/utils";
 import { Colors, TwoToneColors } from "components/utils";
 import { Natricon } from "components/Preferences/Natricons/Natricon";
 import { KnownAccountsContext } from "api/contexts/KnownAccounts";
@@ -39,6 +39,7 @@ export const TransactionsLayout: React.FC = ({ children }) => (
 interface TransactionsTableProps {
   scrollTo?: string;
   data: any;
+  sumAmount?: number;
   isLoading: boolean;
   showPaginate?: boolean;
   isPaginated?: boolean;
@@ -52,6 +53,7 @@ interface TransactionsTableProps {
 const TransactionsTable = ({
   scrollTo,
   data,
+  sumAmount,
   isLoading,
   showPaginate,
   isPaginated,
@@ -98,6 +100,9 @@ const TransactionsTable = ({
           </Col>
           <Col xs={0} lg={5}>
             {t("transaction.amount")}
+            {sumAmount
+              ? ` (Ӿ ${new BigNumber(rawToRai(sumAmount)).toFormat()})`
+              : null}
           </Col>
           <Col xs={0} lg={3} style={{ textAlign: "right" }}>
             {t("common.date")}
@@ -152,11 +157,17 @@ const TransactionsTable = ({
                   >
                     <Tooltip
                       placement="right"
-                      title={t(
-                        `pages.block.${
-                          confirmed === false ? "pending" : "confirmed"
-                        }Status`,
-                      )}
+                      title={
+                        typeof confirmed !== "undefined"
+                          ? t(
+                              `pages.block.${
+                                toBoolean(confirmed) === false
+                                  ? "pending"
+                                  : "confirmed"
+                              }Status`,
+                            )
+                          : null
+                      }
                     >
                       <Tag
                         // @ts-ignore
@@ -164,7 +175,13 @@ const TransactionsTable = ({
                         style={{ textTransform: "capitalize" }}
                         className={`tag-${subtype || type}`}
                         icon={
-                          confirmed === false ? <SyncOutlined spin /> : null
+                          typeof confirmed !== "undefined" ? (
+                            toBoolean(confirmed) === false ? (
+                              <SyncOutlined spin />
+                            ) : (
+                              <CheckCircleOutlined />
+                            )
+                          ) : null
                         }
                       >
                         {t(`transaction.${transactionType}`)}
@@ -222,7 +239,7 @@ const TransactionsTable = ({
                         ? t("common.notAvailable")
                         : ""}
                       {amount && amount !== "0"
-                        ? `Ӿ${new BigNumber(rawToRai(amount)).toFormat()}`
+                        ? `Ӿ ${new BigNumber(rawToRai(amount)).toFormat()}`
                         : ""}
                     </Text>
                   </Col>

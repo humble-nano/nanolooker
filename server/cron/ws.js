@@ -24,39 +24,56 @@ const {
 const { rawToRai } = require("../utils");
 
 let db;
-try {
-  MongoClient.connect(MONGO_URL, MONGO_OPTIONS, (err, client) => {
-    if (err) {
-      throw err;
-    }
+let mongoClient;
 
-    db = client.db(MONGO_DB);
-
-    db.collection(LARGE_TRANSACTIONS).createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: EXPIRE_1W },
-    );
-    db.collection(CONFIRMATIONS_PER_SECOND).createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: EXPIRE_1M },
-    );
-    db.collection(TOTAL_CONFIRMATIONS_COLLECTION).createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: EXPIRE_48H },
-    );
-    db.collection(TOTAL_VOLUME_COLLECTION).createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: EXPIRE_48H },
-    );
-  });
-} catch (err) {
-  console.log("Error", err);
-  Sentry.captureException(err);
+function isConnected() {
+  return (
+    !!mongoClient &&
+    !!mongoClient.topology &&
+    mongoClient.topology.isConnected()
+  );
 }
+
+const connect = async () =>
+  await new Promise((resolve, reject) => {
+    try {
+      MongoClient.connect(MONGO_URL, MONGO_OPTIONS, (err, client) => {
+        if (err) {
+          throw err;
+        }
+        mongoClient = client;
+        db = client.db(MONGO_DB);
+
+        db.collection(LARGE_TRANSACTIONS).createIndex(
+          { createdAt: 1 },
+          { expireAfterSeconds: EXPIRE_1W },
+        );
+        db.collection(CONFIRMATIONS_PER_SECOND).createIndex(
+          { createdAt: 1 },
+          { expireAfterSeconds: EXPIRE_1M },
+        );
+        db.collection(TOTAL_CONFIRMATIONS_COLLECTION).createIndex(
+          { createdAt: 1 },
+          { expireAfterSeconds: EXPIRE_48H },
+        );
+        db.collection(TOTAL_VOLUME_COLLECTION).createIndex(
+          { createdAt: 1 },
+          { expireAfterSeconds: EXPIRE_48H },
+        );
+
+        resolve();
+      });
+    } catch (err) {
+      Sentry.captureException(err);
+      resolve();
+    }
+  });
 
 // Every 3 seconds
 cron.schedule("*/3 * * * * *", async () => {
-  if (!db) return;
+  if (!isConnected()) {
+    await connect();
+  }
 
   try {
     db.collection(CONFIRMATIONS_PER_SECOND)
@@ -85,7 +102,9 @@ cron.schedule("*/3 * * * * *", async () => {
 });
 
 cron.schedule("*/10 * * * * *", async () => {
-  if (!db) return;
+  if (!isConnected()) {
+    return;
+  }
 
   try {
     db.collection(TOTAL_CONFIRMATIONS_COLLECTION)

@@ -57,13 +57,20 @@ const {
   getDelegatorsPage,
   getAllDelegatorsCount,
 } = require("./api/delegators");
+const { getHistoryFilters } = require("./api/historyFilters");
+
 const { getRichListPage, getRichListAccount } = require("./api/richList");
 const { getParticipant, getParticipantsPage } = require("./api/participants");
 const { getNodeLocations } = require("./api/nodeLocations");
 const { getNodeMonitors } = require("./api/nodeMonitors");
 const { getDelegatedEntity } = require("./api/delegatedEntity");
 const { getTelemetry } = require("./api/telemetry");
+const {
+  getRepresentative,
+  getAllRepresentatives,
+} = require("./api/representative");
 const { Sentry } = require("./sentry");
+const { isValidAccountAddress } = require("./utils");
 
 const app = express();
 
@@ -108,13 +115,20 @@ app.get("/api/delegators", async (req, res) => {
   let data;
   const { account, page } = req.query;
 
-  if (account) {
+  if (isValidAccountAddress(account)) {
     data = await getDelegatorsPage({ account, page });
   } else {
     data = await getAllDelegatorsCount();
   }
 
   res.send(data);
+});
+
+app.get("/api/transaction-filters", async (req, res) => {
+  const { account, filters } = req.query;
+  const { sum, data } = await getHistoryFilters({ account, filters });
+
+  res.send({ sum, data });
 });
 
 app.get("/api/large-transactions", async (req, res) => {
@@ -141,10 +155,8 @@ app.get("/api/market-statistics", async (req, res) => {
   const cachedConfirmations48h = nodeCache.get(TOTAL_CONFIRMATIONS_48H);
   const cachedVolume48h = nodeCache.get(TOTAL_VOLUME_48H);
 
-  const {
-    btcTransactionFees24h,
-    btcTransactionFees48h,
-  } = await getBtcTransactionFees();
+  const { btcTransactionFees24h, btcTransactionFees48h } =
+    await getBtcTransactionFees();
   const { marketStats, priceStats } = await getCoingeckoStats({
     fiat: req.query.fiat,
     cryptocurrency: req.query.cryptocurrency,
@@ -158,7 +170,10 @@ app.get("/api/market-statistics", async (req, res) => {
     [BITCOIN_TOTAL_TRANSACTION_FEES_24H]: btcTransactionFees24h,
     [BITCOIN_TOTAL_TRANSACTION_FEES_48H]: btcTransactionFees48h,
     ...marketStats,
-    priceStats,
+    priceStats: {
+      ...{ bitcoin: { usd: 0 } },
+      ...priceStats,
+    },
   });
 });
 
@@ -202,6 +217,16 @@ app.get("/api/node-locations", async (req, res) => {
   const nodeLocations = await getNodeLocations();
 
   res.send(nodeLocations);
+});
+
+app.get("/api/representative", async (req, res) => {
+  const { account } = req.query;
+
+  const representative = account
+    ? await getRepresentative(account)
+    : getAllRepresentatives();
+
+  res.send(representative);
 });
 
 app.get("/api/delegated-entity", async (req, res) => {

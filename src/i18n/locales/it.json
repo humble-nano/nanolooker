@@ -41,7 +41,10 @@
     "comingSoon": "Prossimamente",
     "statistics": "Statistiche",
     "continue": "Continua",
-    "link": "Collegamento"
+    "link": "Collegamento",
+    "noData": "Nessun dato",
+    "include": "Includere",
+    "exclude": "Escludere"
   },
   "nodeHealth": {
     "nodeReloading": "Il nano nodo si sta ricaricando",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Escludi {{knownExchangeList}} dal grafico di distribuzione. Questi account combinati detengono {{knownExchangeBalance}} NANO",
     "unchecked": "Blocchi (transazioni) che sono stati scaricati ma non ancora elaborati dal nodo Nano. Il software del nodo scarica tutti i blocchi da altri nodi come deselezionati, li elabora e li aggiunge al conteggio dei blocchi, conferma i blocchi di frontiera per ogni account e quindi li contrassegna come cementati.",
     "cemented": "Quando un nodo specifico contrassegna una transazione confermata come irreversibile localmente impostando l'altezza di conferma dell'account (nel database del nodo) all'altezza del blocco ora più alta della transazione confermata. La cementazione è un'operazione a livello di nodo.",
-    "unknownLastTransaction": "Le date delle transazioni sono state introdotte nel febbraio 2019. Prima di quella data, i tempi delle transazioni non erano registrati localmente sui nodi. Il motivo per cui la data dell'ultima transazione è sconosciuta è perché è stata confermata prima che le date fossero registrate o prima che il nodo NanoLooker fosse in servizio.",
+    "unknownTransactionDate": "Le date delle transazioni sono state introdotte nel febbraio 2019. Prima di quella data, i tempi delle transazioni non erano registrati localmente sui nodi. Il motivo per cui la data dell'ultima transazione è sconosciuta è perché è stata confermata prima che le date fossero registrate o prima che il nodo NanoLooker fosse in servizio.",
     "confirmationHeight": "Un numero memorizzato nel database del nodo locale che rappresenta il blocco confermato più alto (più recente) in una catena di account. Correlato a (ma diverso da) l'altezza del blocco.",
     "blockHeight": "Un valore intero locale che rappresenta l'ordine di un blocco in una catena di account. Ad esempio, il quindicesimo blocco in un account avrebbe un'altezza di blocco di 15. Correlato a (ma diverso da) altezza di conferma.",
     "bookmarks": "I segnalibri {{type, capitalize}} vengono salvati sul tuo dispositivo. Puoi gestire i tuoi {{type}} noti assegnando loro degli alias.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Affinché una versione abbia il consenso della rete, deve avere il {{onlineWeightQuorumPercent}}% del peso del voto online da un minimo di {{onlineWeightMinimum}} NANO.",
     "onChainVolume": "La somma di tutte le transazioni NANO che sono state confermate sulla rete. Se l'utente A invia 1 NANO e l'utente B riceve 1 NANO nello stesso giorno, verranno aggiunti 2 NANO nel volume giornaliero perché sono state trasmesse e confermate 2 transazioni, una di invio e una di ricezione.",
     "pendingTransactionCount": "Il numero di transazioni ricevibili supera il limite visualizzato di {{count}}.",
-    "pendingTransaction": "I fondi sono stati inviati a questo conto ma il proprietario non ha ancora intascato i fondi. Solo il proprietario dell'account può scrivere una transazione ricevuta nella propria blockchain. Se questo è il tuo account, sblocca il tuo portafoglio, il blocco di ricezione viene solitamente trasmesso automaticamente."
+    "pendingTransaction": "I fondi sono stati inviati a questo conto ma il proprietario non ha ancora intascato i fondi. Solo il proprietario dell'account può scrivere una transazione ricevuta nella propria blockchain. Se questo è il tuo account, sblocca il tuo portafoglio, il blocco di ricezione viene solitamente trasmesso automaticamente.",
+    "socialStatistics": "Le statistiche vengono compilate utilizzando le prime 200 criptovalute per capitalizzazione di mercato di CoinGecko.",
+    "dailyBalance": "Il grafico delle transazioni è visibile solo se l'account ha più di 1 giorno di dati e se le transazioni hanno timestamp",
+    "senderFilter": "Filtra i blocchi per includere o escludere solo tutte le transazioni di invio da un indirizzo specifico. Per filtrare più indirizzi, separali con una virgola.",
+    "receiverFilter": "Filtra i blocchi per includere o escludere solo tutte le transazioni di invio da un indirizzo specifico. Per filtrare più indirizzi, separali con una virgola.",
+    "filterTransactions": "Possono essere filtrati solo gli account con meno di 5.000 transazioni confermate"
   },
   "search": {
     "searchBy": "Cerca per indirizzo / blocco / account noto",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Peso di voto",
       "percentNetworkVotingWeight": "% del peso del voto di rete",
-      "percentRepresentativeVotingWeight": "% del peso di voto del rappresentante",
       "noRepresentative": "Nessun rappresentante",
       "confirmationHeight": "Altezza di conferma",
       "lastTransaction": "Ultima transazione",
       "loadMoreTransactions": "Carica più transazioni",
       "viewTransactions": "Visualizza le transazioni",
-      "notOpenedYet": "Questo account non è stato ancora aperto",
-      "notOpenedYetReason": "Sebbene l'indirizzo dell'account sia valido, nessun blocco è stato ancora pubblicato nella sua catena. Se NANO è stato inviato a questo account, deve comunque pubblicare un blocco corrispondente per intascare i fondi.",
       "missingAccount": "Account mancante",
       "missingAccountInfo": "L'account non è specificato nell'URL. Usa la barra di ricerca in alto per cercare un account o aggiungilo nell'URL dopo /account/",
       "notVoting": "Non voto",
       "pendingTransactions": "Transazioni pronte per essere ricevute",
-      "pendingTransaction": "Transazione pronta per essere ricevuta"
+      "pendingTransaction": "Transazione pronta per essere ricevuta",
+      "dailyBalanceOption": " Equilibrio giornaliero",
+      "byTransactionOption": "Saldo per transazione",
+      "dailyBalance": "Ultime {{count}} transazioni",
+      "notOpenedYet": "Questo account non ha transazioni",
+      "notOpenedYetReason": "Mentre l'account è valido, non sono stati ancora aggiunti blocchi alla sua catena. Se NANO è stato inviato a questo account, è possibile che il nodo NanoLooker non abbia ancora ricevuto la transazione perché il servizio che stai utilizzando non l'ha ancora trasmessa o per condizioni di rete temporanee.",
+      "dateRange": "Intervallo di date",
+      "includeNoTimestamp": "Includi blocchi senza data",
+      "excludeUnknownAccounts": "Mostra solo i blocchi di account conosciuti",
+      "advancedOptions": "Opzioni avanzate",
+      "applyFilters": "Applicare filtri",
+      "fields": "Campi",
+      "delimiter": "Delimitatore",
+      "delimiterComma": "Virgola",
+      "delimiterSemicolon": "Punto e virgola",
+      "delimiterTab": "Tab",
+      "delimiterSpace": "Spazio",
+      "delimiterPipe": "Tubo",
+      "fileName": "Nome del file",
+      "minimum": "Minimo",
+      "maximum": "Massimo",
+      "from": "Da",
+      "to": "Per",
+      "startDate": "Data d'inizio",
+      "endDate": "Data di fine",
+      "exportToCsv": "Esporta in CSV",
+      "export": "Esportare",
+      "exportTransactions": "Esporta {{count}} transazioni in CSV",
+      "reverse": "Invertire l'ordine di transazione",
+      "sumAmounts": "Somma gli importi"
     },
     "block": {
       "blockSubtype": "Sottotipo di blocco",
@@ -200,7 +234,11 @@
       "missingBlock": "Blocco mancante",
       "missingBlockInfo": "Il blocco non è specificato nell'URL. Usa la barra di ricerca in alto per cercare un blocco o aggiungilo nell'URL dopo /block/",
       "blockNotFound": "Blocco non trovato",
-      "blockNotFoundInfo": "Il blocco richiesto non è stato trovato. È possibile che il blocco sia presente sulla rete Nano ma non sia ancora stato visto dal nodo. Assicurati di cercare il blocco corretto o riprova più tardi."
+      "blockNotFoundInfo": "Il blocco richiesto non è stato trovato. È possibile che il blocco sia presente sulla rete Nano ma non sia ancora stato visto dal nodo. Assicurati di cercare il blocco corretto o riprova più tardi.",
+      "successorBlock": "Blocco successore",
+      "lastAccountBlock": "Questo blocco è il più recente sull'account",
+      "matchingSendBlock": "Blocco di invio corrispondente",
+      "noMatchingSendBlock": "Nessun blocco corrispondente trovato"
     },
     "representatives": {
       "voteDistribution": "Distribuzione dei voti",
@@ -399,7 +437,11 @@
         "q": "Premi Q o fai clic sul trofeo per visualizzare il tuo libro delle missioni",
         "m": "Premi M o fai clic sull'altoparlante per disattivare l'audio"
       },
-      "nanoPotions": "Pozioni NANO"
+      "nanoPotions": "Pozioni NANO",
+      "guide": {
+        "title": "Guida di NanoBrowserQuest"
+      },
+      "playerGuide": "Guida del giocatore"
     },
     "statistics": {
       "social": {

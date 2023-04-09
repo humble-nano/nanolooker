@@ -86,18 +86,20 @@ const Representatives: React.FC<Props> = ({ versions }) => {
         showTitle: false,
         formatter: ({
           weight,
+          count,
           version,
         }: {
           weight: number;
+          count: number;
           version: string;
         }) => ({
           name: version,
           value: isVersionByWeight
-            ? `Ӿ${new BigNumber(weight).toFormat(2)} - ${new BigNumber(weight)
+            ? `Ӿ ${new BigNumber(weight).toFormat(2)} - ${new BigNumber(weight)
                 .times(100)
                 .dividedBy(totalWeight)
                 .toFormat(2)}%`
-            : `${weight} ${t("common.nodes")}`,
+            : `${count} ${t("common.nodes")}`,
         }),
       },
       interactions: [{ type: "element-active" }],

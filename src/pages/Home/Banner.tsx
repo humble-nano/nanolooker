@@ -61,9 +61,9 @@ const Banner: React.FC = () => {
       </div>
 
       <Space size={[6, 12]} wrap style={{ justifyContent: "center" }}>
-        <Link to={"/what-is-nano"}>
+        {/* <Link to={"/what-is-nano"}>
           <Button ghost>{t("menu.whatIsNano")}</Button>
-        </Link>
+        </Link> */}
 
         <Button
           ghost

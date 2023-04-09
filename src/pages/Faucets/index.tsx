@@ -1,6 +1,8 @@
 import * as React from "react";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import sortBy from "lodash/sortBy";
+import reverse from "lodash/reverse";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Card, Col, Row, Skeleton, Tooltip, Typography } from "antd";
@@ -30,7 +32,17 @@ const FaucetsPage: React.FC = () => {
         }),
       ),
     ).then((histories: AccountHistory[]) => {
-      setAccountHistories(histories);
+      const sortedHistories = reverse(
+        sortBy(
+          histories,
+          function (o) {
+            return parseInt(o.history[0].height);
+          },
+          ["desc"],
+        ),
+      );
+
+      setAccountHistories(sortedHistories);
       setIsLoading(false);
     });
 
@@ -69,14 +81,25 @@ const FaucetsPage: React.FC = () => {
             </Col>
           </Row>
         ) : null}
-        {faucets.map(({ alias, account, link, byLink }) => {
+        {accountHistories.map(({ account: historyAccount, history }) => {
+          const {
+            alias,
+            account,
+            link,
+            byLink,
+          }: {
+            alias: string;
+            account: string;
+            link: string;
+            byLink?: string;
+          } = faucets.find(({ account }) => account === historyAccount)!;
+
           const { height, local_timestamp: localTimestamp = 0 } =
-            accountHistories?.find(
-              ({ account: historyAccount }) => historyAccount === account,
-            )?.history[0] || {};
+            history[0] || {};
 
           const modifiedTimestamp = Number(localTimestamp) * 1000;
-          return (
+
+          return alias && account && link ? (
             <Row gutter={6} key={alias}>
               <Col xs={24} sm={6} xl={4}>
                 {alias}
@@ -134,7 +157,7 @@ const FaucetsPage: React.FC = () => {
                 </a>
               </Col>
             </Row>
-          );
+          ) : null;
         })}
       </Card>
     </>

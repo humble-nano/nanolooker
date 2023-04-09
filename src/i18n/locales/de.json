@@ -41,7 +41,10 @@
     "comingSoon": "Kommt bald",
     "statistics": "Statistiken",
     "continue": "Weitermachen",
-    "link": "Verknüpfung"
+    "link": "Verknüpfung",
+    "noData": "Keine Daten",
+    "include": "Enthalten",
+    "exclude": "Ausschließen"
   },
   "nodeHealth": {
     "nodeReloading": "Der Nanoknoten wird neu geladen",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Schließen Sie {{unknownExchangeList}} aus dem Verteilungsdiagramm aus. Diese Konten zusammen enthalten {{unknownExchangeBalance}} NANO",
     "unchecked": "Blöcke (Transaktionen), die vom Nano-Knoten heruntergeladen, aber noch nicht verarbeitet wurden. Die Knotensoftware lädt alle Blöcke von anderen Knoten als deaktiviert herunter, verarbeitet sie und erhöht die Blockanzahl, bestätigt die Grenzblöcke für jedes Konto und markiert sie dann als zementiert.",
     "cemented": "Wenn ein bestimmter Knoten eine bestätigte Transaktion als lokal irreversibel markiert, setzen Sie die Bestätigungshöhe des Kontos (in der Knotendatenbank) auf die jetzt höhere Blockhöhe der bestätigten Transaktion. Das Zementieren ist eine Operation auf Knotenebene.",
-    "unknownLastTransaction": "Die Transaktionsdaten wurden im Februar 2019 eingeführt. Vor diesem Datum wurden die Transaktionszeiten nicht lokal auf den Knoten aufgezeichnet. Der Grund, warum das letzte Transaktionsdatum unbekannt ist, liegt darin, dass es bestätigt wurde, bevor die Daten aufgezeichnet wurden oder bevor der NanoLooker-Knoten in Betrieb war.",
+    "unknownTransactionDate": "Die Transaktionsdaten wurden im Februar 2019 eingeführt. Vor diesem Datum wurden die Transaktionszeiten nicht lokal auf den Knoten aufgezeichnet. Der Grund, warum das letzte Transaktionsdatum unbekannt ist, liegt darin, dass es bestätigt wurde, bevor die Daten aufgezeichnet wurden oder bevor der NanoLooker-Knoten in Betrieb war.",
     "confirmationHeight": "Eine in der lokalen Knotendatenbank gespeicherte Nummer, die den höchsten (letzten) bestätigten Block in einer Kontokette darstellt. Bezogen auf (aber anders als) Blockhöhe.",
     "blockHeight": "Ein lokaler ganzzahliger Wert, der die Reihenfolge eines Blocks in einer Kontokette darstellt. Zum Beispiel hätte der 15. Block in einem Konto eine Blockhöhe von 15. Bezogen auf die Bestätigungshöhe (unterscheidet sich jedoch von dieser).",
     "bookmarks": "{{type, capitalize}} Lesezeichen werden auf Ihrem Gerät gespeichert. Sie können Ihre bekannten {{type}} s verwalten, indem Sie ihnen Aliase geben.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Damit eine Version den Konsens des Netzwerks übernimmt, muss sie {{onlineWeightQuorumPercent}}% des Online-Abstimmungsgewichts von mindestens {{onlineWeightMinimum}} NANO haben.",
     "onChainVolume": "Die Summe aller NANO-Transaktionen, die im Netzwerk bestätigt wurden. Wenn Benutzer A 1 NANO sendet und Benutzer B 1 NANO am selben Tag empfängt, werden 2 NANO zum Tagesvolumen hinzugefügt, da 2 Transaktionen gesendet und bestätigt wurden, ein Senden und ein Empfangen.",
     "pendingTransactionCount": "Die Anzahl der ausstehenden Transaktionen überschreitet das angezeigte Limit von {{count}}.",
-    "pendingTransaction": "Gelder wurden auf dieses Konto überwiesen, aber der Eigentümer hat die Gelder noch nicht eingesteckt. Nur der Inhaber des Kontos kann eine empfangene Transaktion in seine Blockchain schreiben. Wenn dies Ihr Konto ist, entsperren Sie Ihr Wallet, der Empfangsblock wird normalerweise automatisch gesendet."
+    "pendingTransaction": "Gelder wurden auf dieses Konto überwiesen, aber der Eigentümer hat die Gelder noch nicht eingesteckt. Nur der Inhaber des Kontos kann eine empfangene Transaktion in seine Blockchain schreiben. Wenn dies Ihr Konto ist, entsperren Sie Ihr Wallet, der Empfangsblock wird normalerweise automatisch gesendet.",
+    "socialStatistics": "Statistiken werden anhand der Top-100-Kryptowährungen nach Marktkapitalisierung von CoinGecko erstellt.",
+    "dailyBalance": "Das Transaktionsdiagramm ist nur sichtbar, wenn das Konto mehr als 1 Tag Daten hat und wenn die Transaktionen Zeitstempel haben",
+    "senderFilter": "Filtern Sie Blöcke, um nur alle Sendetransaktionen von einer bestimmten Adresse einzuschließen oder auszuschließen. Um mehrere Adressen zu filtern, trennen Sie sie durch ein Komma.",
+    "receiverFilter": "Filtern Sie Blöcke, um nur alle Sendetransaktionen von einer bestimmten Adresse einzuschließen oder auszuschließen. Um mehrere Adressen zu filtern, trennen Sie sie durch ein Komma.",
+    "filterTransactions": "Nur Konten mit gleich oder weniger als 5.000 bestätigten Transaktionen können gefiltert werden"
   },
   "search": {
     "searchBy": "Suche nach Adresse / Block / Bekanntem Konto",
@@ -105,7 +113,7 @@
     "languageDetailed": "Wählen Sie die gewünschte Sprache. NanoLooker sucht nach Mitwirkenden, um die Übersetzung des Explorers zu verbessern. <0>Mithelfen</0>",
     "watch": "Beobachten Sie andere Kryptowährungen",
     "watchSearch": "Suche nach Kryptowährungen",
-    "watchDetailed": "Beobachten Sie den Preis anderer Kryptowährungen in den Top 100. Die aktuellen Marktpreise und die 24-Stunden-Änderung werden in der oberen Leiste angezeigt. Sie können Ihre Auswahl auch per Drag & Drop neu anordnen.",
+    "watchDetailed": "Beobachten Sie den Preis anderer Kryptowährungen in den Top 200. Die aktuellen Marktpreise und die 24-Stunden-Änderung werden in der oberen Leiste angezeigt. Sie können Ihre Auswahl auch per Drag & Drop neu anordnen.",
     "fiatCurrency": "Fiatwährung",
     "fiatCurrencyDetailed": "Fiat-Geld ist eine von der Regierung ausgegebene Währung. Wählen Sie eine Fiat-Währung, um den Preis von Nano zu vergleichen.",
     "natricons": "Natricons",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Abstimmungsgewicht",
       "percentNetworkVotingWeight": "% des Abstimmungsgewichts des Netzwerks",
-      "percentRepresentativeVotingWeight": "% des Stimmgewichts des Vertreters",
       "noRepresentative": "Kein Vertreter",
       "confirmationHeight": "Bestätigungshöhe",
       "lastTransaction": "Letzte Transaktion",
       "loadMoreTransactions": "Laden Sie weitere Transaktionen",
       "viewTransactions": "Transaktionen anzeigen",
-      "notOpenedYet": "Dieses Konto wurde noch nicht eröffnet",
-      "notOpenedYetReason": "Während die Kontoadresse gültig ist, wurden noch keine Blöcke in ihrer Kette veröffentlicht. Wenn NANO auf dieses Konto gesendet wurde, muss noch ein entsprechender Block veröffentlicht werden, um das Geld einzustecken.",
       "missingAccount": "Fehlendes Konto",
       "missingAccountInfo": "Das Konto ist nicht in der URL angegeben. Verwenden Sie die obere Suchleiste, um nach einem Konto zu suchen, oder hängen Sie es an die URL nach /account/ an.",
       "notVoting": "Nicht abstimmend",
       "pendingTransactions": "empfangsbereite Transaktionen",
-      "pendingTransaction": "Transaktion empfangsbereit"
+      "pendingTransaction": "Transaktion empfangsbereit",
+      "dailyBalanceOption": " Tagesbilanz",
+      "byTransactionOption": "Saldo nach Transaktion",
+      "dailyBalance": "Letzte {{count}} Transaktionen",
+      "notOpenedYet": "Dieses Konto enthält keine Transaktionen",
+      "notOpenedYetReason": "Während das Konto gültig ist, wurden seiner Kette noch keine Blöcke hinzugefügt. Wenn NANO an dieses Konto gesendet wurde, ist es möglich, dass der NanoLooker-Knoten die Transaktion noch nicht erhalten hat, weil der von Ihnen verwendete Dienst sie noch nicht gesendet hat oder aufgrund vorübergehender Netzwerkbedingungen.",
+      "dateRange": "Datumsbereich",
+      "includeNoTimestamp": "Blöcke ohne Datum einbeziehen",
+      "excludeUnknownAccounts": "Nur Blöcke von bekannten Konten anzeigen",
+      "advancedOptions": "Erweiterte Optionen",
+      "applyFilters": "Filter anwenden",
+      "fields": "Felder",
+      "delimiter": "Trennzeichen",
+      "delimiterComma": "Komma",
+      "delimiterSemicolon": "Semikolon",
+      "delimiterTab": "Tab",
+      "delimiterSpace": "Platz",
+      "delimiterPipe": "Rohr",
+      "fileName": "Dateiname",
+      "minimum": "Minimum",
+      "maximum": "Maximal",
+      "from": "Aus",
+      "to": "Zu",
+      "startDate": "Anfangsdatum",
+      "endDate": "Endtermin",
+      "exportToCsv": "In CSV exportieren",
+      "export": "Export",
+      "exportTransactions": "{{count}} Transaktionen in CSV exportieren",
+      "reverse": "Kehren Sie die Transaktionsreihenfolge um",
+      "sumAmounts": "Summe die Beträge"
     },
     "block": {
       "blockSubtype": "Subtyp blockieren",
@@ -200,7 +234,11 @@
       "missingBlock": "Fehlender Block",
       "missingBlockInfo": "Der Block ist in der URL nicht angegeben. Verwenden Sie die obere Suchleiste, um nach einem Block zu suchen, oder hängen Sie ihn an die URL nach /block/ an",
       "blockNotFound": "Block nicht gefunden",
-      "blockNotFoundInfo": "Der von Ihnen angeforderte Block wurde nicht gefunden. Es ist möglich, dass der Block im Nano-Netzwerk vorhanden ist, aber vom Knoten noch nicht gesehen wurde. Stellen Sie sicher, dass Sie nach dem richtigen Block suchen, oder versuchen Sie es später erneut."
+      "blockNotFoundInfo": "Der von Ihnen angeforderte Block wurde nicht gefunden. Es ist möglich, dass der Block im Nano-Netzwerk vorhanden ist, aber vom Knoten noch nicht gesehen wurde. Stellen Sie sicher, dass Sie nach dem richtigen Block suchen, oder versuchen Sie es später erneut.",
+      "successorBlock": "Nachfolgeblock",
+      "lastAccountBlock": "Dieser Block ist der neueste auf dem Konto",
+      "matchingSendBlock": "Passender Sendeblock",
+      "noMatchingSendBlock": "Kein passender Block gefunden"
     },
     "representatives": {
       "voteDistribution": "Stimmenverteilung",
@@ -399,7 +437,11 @@
         "q": "Drücke Q oder klicke auf die Trophäe, um dein Quest-Buch anzuzeigen",
         "m": "Drücken Sie M oder klicken Sie auf den Lautsprecher, um die Stummschaltung umzuschalten"
       },
-      "nanoPotions": "NANO-Tränke"
+      "nanoPotions": "NANO-Tränke",
+      "guide": {
+        "title": "NanoBrowserQuest-Leitfaden"
+      },
+      "playerGuide": "Leitfaden für Spieler"
     },
     "statistics": {
       "social": {

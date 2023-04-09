@@ -41,7 +41,10 @@
     "comingSoon": "Próximamente, en breve, pronto",
     "statistics": "Estadísticas",
     "continue": "Continuar",
-    "link": "Enlace"
+    "link": "Enlace",
+    "noData": "Sin datos",
+    "include": "Incluir",
+    "exclude": "Excluir"
   },
   "nodeHealth": {
     "nodeReloading": "Nano nodo se está recargando",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Excluya {{knownExchangeList}} del gráfico de distribución. Esas cuentas combinadas tienen {{knownExchangeBalance}} NANO",
     "unchecked": "Bloques (transacciones) que se han descargado pero que el nodo Nano aún no ha procesado. El software de nodo descarga todos los bloques de otros nodos como desmarcados, los procesa y agrega al conteo de bloques, confirma los bloques de frontera para cada cuenta y luego los marca como cementados.",
     "cemented": "Cuando un nodo específico marca una transacción confirmada como localmente irreversible estableciendo la altura de confirmación de la cuenta (en la base de datos del nodo) a la altura de bloque ahora más alta de la transacción confirmada. La cementación es una operación a nivel de nodo.",
-    "unknownLastTransaction": "Las fechas de transacción se introdujeron en febrero de 2019. Antes de esa fecha, los tiempos de transacción no se registraban localmente en los nodos. La razón por la que se desconoce la fecha de la última transacción es porque se confirmó antes de que se registraran las fechas o antes de que el nodo NanoLooker estuviera en servicio.",
+    "unknownTransactionDate": "Las fechas de transacción se introdujeron en febrero de 2019. Antes de esa fecha, los tiempos de transacción no se registraban localmente en los nodos. La razón por la que se desconoce la fecha de la última transacción es porque se confirmó antes de que se registraran las fechas o antes de que el nodo NanoLooker estuviera en servicio.",
     "confirmationHeight": "Un número almacenado en la base de datos del nodo local que representa el bloque confirmado más alto (más reciente) en una cadena de cuentas. Relacionado con (pero diferente) la altura del bloque.",
     "blockHeight": "Un valor entero local que representa el orden de un bloque en una cadena de cuentas. Por ejemplo, el bloque 15 de una cuenta tendría una altura de bloque de 15. Relacionado con (pero diferente) la altura de confirmación.",
     "bookmarks": "Los marcadores {{type, capitalize}} se guardan en su dispositivo. Puede administrar sus {{type}} conocidos dándoles alias.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Para que una versión se apodere del consenso de la red, debe tener el {{onlineWeightQuorumPercent}}% del peso de la votación en línea de un mínimo de {{onlineWeightMinimum}} NANO.",
     "onChainVolume": "La suma de todas las transacciones NANO que se han confirmado en la red. Si el usuario A envía 1 NANO y el usuario B recibe 1 NANO el mismo día, se agregarán 2 NANO en el volumen diario porque se transmitieron y confirmaron 2 transacciones, un envío y una recepción.",
     "pendingTransactionCount": "El número de transacciones por cobrar excede el límite mostrado de {{count}}.",
-    "pendingTransaction": "Se enviaron fondos a esta cuenta, pero el propietario aún no se los ha guardado en el bolsillo. Solo el propietario de la cuenta puede escribir una transacción recibida en su blockchain. Si esta es su cuenta, desbloquee su billetera, el bloqueo de recepción generalmente se transmite automáticamente."
+    "pendingTransaction": "Se enviaron fondos a esta cuenta, pero el propietario aún no se los ha guardado en el bolsillo. Solo el propietario de la cuenta puede escribir una transacción recibida en su blockchain. Si esta es su cuenta, desbloquee su billetera, el bloqueo de recepción generalmente se transmite automáticamente.",
+    "socialStatistics": "Las estadísticas se compilan utilizando las 200 principales criptomonedas por capitalización de mercado de CoinGecko.",
+    "dailyBalance": "El gráfico de transacciones solo es visible si la cuenta tiene más de 1 día de datos y si las transacciones tienen marcas de tiempo",
+    "senderFilter": "Filtre bloques para incluir solo o excluir todas las transacciones de envío desde una dirección específica. Para filtrar varias direcciones, sepárelas con una coma.",
+    "receiverFilter": "Filtre bloques para incluir solo o excluir todas las transacciones de envío desde una dirección específica. Para filtrar varias direcciones, sepárelas con una coma.",
+    "filterTransactions": "Solo se pueden filtrar cuentas con igual o menos de 5.000 transacciones confirmadas"
   },
   "search": {
     "searchBy": "Buscar por dirección / bloque / cuenta conocida",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Peso de voto",
       "percentNetworkVotingWeight": "% del peso de la votación de la red",
-      "percentRepresentativeVotingWeight": "% del peso de voto del representante",
       "noRepresentative": "Sin representante",
       "confirmationHeight": "Altura de confirmación",
       "lastTransaction": "Última transacción",
       "loadMoreTransactions": "Cargar más transacciones",
       "viewTransactions": "Ver transacciones",
-      "notOpenedYet": "Esta cuenta aún no se ha abierto",
-      "notOpenedYetReason": "Si bien la dirección de la cuenta es válida, aún no se han publicado bloques en su cadena. Si NANO se ha enviado a esta cuenta, aún necesita publicar un bloque correspondiente para guardar los fondos.",
       "missingAccount": "Cuenta faltante",
       "missingAccountInfo": "La cuenta no está especificada en la URL. Use la barra de búsqueda superior para buscar una cuenta o añádala en la URL después de /account/",
       "notVoting": "No votar",
       "pendingTransactions": "Transacciones listas para ser recibidas",
-      "pendingTransaction": "Transacción lista para ser recibida"
+      "pendingTransaction": "Transacción lista para ser recibida",
+      "dailyBalanceOption": " Saldo diario",
+      "byTransactionOption": "Saldo por transacción",
+      "dailyBalance": "Últimas {{count}} transacciones",
+      "notOpenedYet": "Esta cuenta no tiene transacciones",
+      "notOpenedYetReason": "Si bien la cuenta es válida, aún no se han agregado bloques a su cadena. Si se envió NANO a esta cuenta, es posible que el nodo NanoLooker aún no haya recibido la transacción porque el servicio que está utilizando aún no la transmitió o debido a condiciones temporales de la red.",
+      "dateRange": "Rango de fechas",
+      "includeNoTimestamp": "Incluir bloques sin fecha",
+      "excludeUnknownAccounts": "Mostrar solo bloqueos de cuentas conocidas",
+      "advancedOptions": "Opciones avanzadas",
+      "applyFilters": "Aplicar filtros",
+      "fields": "Campos",
+      "delimiter": "delimitador",
+      "delimiterComma": "Coma",
+      "delimiterSemicolon": "Punto y coma",
+      "delimiterTab": "Pestaña",
+      "delimiterSpace": "Espacio",
+      "delimiterPipe": "Tubo",
+      "fileName": "Nombre del archivo",
+      "minimum": "Mínimo",
+      "maximum": "Máximo",
+      "from": "De",
+      "to": "A",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha final",
+      "exportToCsv": "Exportar a CSV",
+      "export": "Exportar",
+      "exportTransactions": "Exportar {{count}} transacciones a CSV",
+      "reverse": "Invertir el orden de la transacción",
+      "sumAmounts": "suma las cantidades"
     },
     "block": {
       "blockSubtype": "Subtipo de bloque",
@@ -200,7 +234,11 @@
       "missingBlock": "Bloque faltante",
       "missingBlockInfo": "El bloque no está especificado en la URL. Use la barra de búsqueda superior para buscar un bloque o añádalo en la URL después de /block/",
       "blockNotFound": "Bloque no encontrado",
-      "blockNotFoundInfo": "El bloque que solicitaste no se encuentra. Es posible que el bloque esté presente en la red Nano pero el nodo aún no lo haya visto. Asegúrate de buscar el bloque correcto o vuelve a intentarlo más tarde."
+      "blockNotFoundInfo": "El bloque que solicitaste no se encuentra. Es posible que el bloque esté presente en la red Nano pero el nodo aún no lo haya visto. Asegúrate de buscar el bloque correcto o vuelve a intentarlo más tarde.",
+      "successorBlock": "Bloque sucesor",
+      "lastAccountBlock": "Este Bloque es el más reciente en la cuenta",
+      "matchingSendBlock": "Bloque de envío coincidente",
+      "noMatchingSendBlock": "No se encontró ningún bloque coincidente"
     },
     "representatives": {
       "voteDistribution": "Distribución de votos",
@@ -399,7 +437,11 @@
         "q": "Pulsa Q o haz clic en el trofeo para ver tu libro de misiones.",
         "m": "Presione M o haga clic en el altavoz para alternar Silencio"
       },
-      "nanoPotions": "Pociones NANO"
+      "nanoPotions": "Pociones NANO",
+      "guide": {
+        "title": "Guía de NanoBrowserQuest"
+      },
+      "playerGuide": "Guía del jugador"
     },
     "statistics": {
       "social": {

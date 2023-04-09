@@ -1,7 +1,9 @@
 import * as React from "react";
 import { rpc } from "api/rpc";
 import { isValidAccountAddress } from "components/utils";
-import { BURN_ACCOUNT } from "knownAccounts.json";
+import KnownAccounts from "knownAccounts.json";
+
+const { BURN_ACCOUNT } = KnownAccounts;
 
 export interface AccountInfoRPCResponse {
   frontier: string;
@@ -38,7 +40,7 @@ const Provider: React.FC = ({ children }) => {
   const [accountInfo, setAccountInfo] = React.useState(
     {} as AccountInfoRPCResponse,
   );
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   const [isError, setIsError] = React.useState(false);
 
   const getAccountInfo = async (account: string) => {

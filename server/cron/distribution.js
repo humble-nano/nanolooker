@@ -248,11 +248,8 @@ const doDistributionCron = async () => {
     const startTime = new Date();
     console.log("Distribution cron started");
 
-    const {
-      distribution,
-      dormantFunds,
-      knownExchanges,
-    } = await getDistribution();
+    const { distribution, dormantFunds, knownExchanges } =
+      await getDistribution();
 
     fs.writeFileSync(DISTRIBUTION_PATH, JSON.stringify(distribution, null, 2));
     fs.writeFileSync(DORMANT_FUNDS_PATH, JSON.stringify(dormantFunds, null, 2));

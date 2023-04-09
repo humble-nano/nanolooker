@@ -41,7 +41,10 @@
     "comingSoon": "即将推出",
     "statistics": "统计数据",
     "continue": "继续",
-    "link": "关联"
+    "link": "关联",
+    "noData": "没有数据",
+    "include": "包括",
+    "exclude": "排除"
   },
   "nodeHealth": {
     "nodeReloading": "纳米节点正在重新加载",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "从分布图中排除{{knownExchangeList}}。这些帐户合计持有{{knownExchangeBalance}} NANO",
     "unchecked": "Nano节点已下载但尚未处理的块（事务）。节点软件将未经检查的其他节点的所有块下载，对其进行处理并添加到块计数中，确认每个帐户的边界块，然后将其标记为固定。",
     "cemented": "通过将帐户的确认高度（在节点数据库中）设置为现在已确认交易的更高区块高度，当特定节点将已确认交易标记为本地不可逆时。固井是节点级别的操作。",
-    "unknownLastTransaction": "交易日期于2019年2月引入。在此日期之前，交易时间未在节点上本地记录。上次交易日期未知的原因是，该日期在记录日期之前或在NanoLooker节点投入使用之前已得到确认。",
+    "unknownTransactionDate": "交易日期于2019年2月引入。在此日期之前，交易时间未在节点上本地记录。上次交易日期未知的原因是，该日期在记录日期之前或在NanoLooker节点投入使用之前已得到确认。",
     "confirmationHeight": "存储在本地节点数据库中的数字，代表帐户链中已确认的最高（最新）区块。与块高有关（但不同于）。",
     "blockHeight": "一个局部整数值，表示帐户链中一个区块的顺序。例如，帐户中的第15个区块的区块高度为15。与确认高度相关（但不同于）。",
     "bookmarks": "{{type，capitalize}}书签已保存在您的设备上。您可以通过为它们命名为别名来管理已知的{{type}}。",
@@ -90,7 +93,12 @@
     "versionsByWeight": "为了使版本能够取代网络的共识，它需要至少具有{{onlineWeightMinimum}} NANO的67％的在线投票权。",
     "onChainVolume": "网络上已确认的所有 NANO 交易的总和。如果用户 A 发送 1 个 NANO，用户 B 在同一天收到 1 个 NANO，那么每天的交易量会增加 2 个 NANO，因为 2 个交易被广播和确认，一个发送和一个接收。",
     "pendingTransactionCount": "应收交易的数量超过了显示的{{count}} 限制。",
-    "pendingTransaction": "资金已发送到此帐户，但所有者尚未将资金收入囊中。只有帐户的所有者才能将收到的交易写入他们的区块链。如果这是您的帐户，请解锁您的钱包，通常会自动广播接收块。"
+    "pendingTransaction": "资金已发送到此帐户，但所有者尚未将资金收入囊中。只有帐户的所有者才能将收到的交易写入他们的区块链。如果这是您的帐户，请解锁您的钱包，通常会自动广播接收块。",
+    "socialStatistics": "统计数据是使用 CoinGecko 按市值排名前 200 位的加密货币编制的。",
+    "dailyBalance": "交易图表仅在账户有超过 1 天的数据并且交易有时间戳时才可见",
+    "senderFilter": "过滤块以仅包含或排除来自特定地址的所有发送交易。要过滤多个地址，请用逗号分隔它们。",
+    "receiverFilter": "过滤块以仅包含或排除来自特定地址的所有发送交易。要过滤多个地址，请用逗号分隔它们。",
+    "filterTransactions": "只能过滤等于或少于 5,000 笔已确认交易的账户"
   },
   "search": {
     "searchBy": "按地址/阻止/已知帐户搜索",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "投票权重",
       "percentNetworkVotingWeight": "网络投票权的百分比",
-      "percentRepresentativeVotingWeight": "代表投票权的百分比",
       "noRepresentative": "没有代表",
       "confirmationHeight": "确认高度",
       "lastTransaction": "最后交易",
       "loadMoreTransactions": "加载更多交易",
       "viewTransactions": "查看交易",
-      "notOpenedYet": "此帐户尚未打开",
-      "notOpenedYetReason": "帐户地址有效时，尚未将任何块发布到其链中。如果NANO已发送到该帐户，它仍需要发布相应的块以将资金放入口袋。",
       "missingAccount": "帐户遗失",
       "missingAccountInfo": "未在URL中指定帐户。使用顶部的搜索栏搜索帐户，或将其附加在 /account/ 之后的URL中",
       "notVoting": "不投票",
       "pendingTransactions": "准备接收的交易",
-      "pendingTransaction": "交易准备好接收"
+      "pendingTransaction": "交易准备好接收",
+      "dailyBalanceOption": " 每日余额",
+      "byTransactionOption": "交易余额",
+      "dailyBalance": "最后 {{count}} 笔交易",
+      "notOpenedYet": "此帐户没有任何交易",
+      "notOpenedYetReason": "虽然该帐户有效，但尚未将任何块添加到其链中。如果 NANO 已发送到该账户，则可能是 NanoLooker 节点尚未收到交易，因为您正在使用的服务尚未广播它或由于临时网络条件。",
+      "dateRange": "日期范围",
+      "includeNoTimestamp": "包括没有日期的块",
+      "excludeUnknownAccounts": "仅显示来自已知帐户的块",
+      "advancedOptions": "高级选项",
+      "applyFilters": "应用过滤器",
+      "fields": "字段",
+      "delimiter": "分隔符",
+      "delimiterComma": "逗号",
+      "delimiterSemicolon": "分号",
+      "delimiterTab": "标签",
+      "delimiterSpace": "空间",
+      "delimiterPipe": "管道",
+      "fileName": "文件名",
+      "minimum": "最低限度",
+      "maximum": "最大",
+      "from": "从",
+      "to": "至",
+      "startDate": "开始日期",
+      "endDate": "结束日期",
+      "exportToCsv": "导出为 CSV",
+      "export": "出口",
+      "exportTransactions": "将 {{count}} 个交易导出到 CSV",
+      "reverse": "反转交易顺序",
+      "sumAmounts": "合计金额"
     },
     "block": {
       "blockSubtype": "块子类型",
@@ -200,7 +234,11 @@
       "missingBlock": "丢失的块",
       "missingBlockInfo": "URL中未指定该块。使用顶部搜索栏搜索块或将其附加在 /block/ 之后的URL中",
       "blockNotFound": "找不到区块",
-      "blockNotFoundInfo": "找不到您要求的封锁。该块可能存在于Nano网络上，但尚未被节点看到。确保您正在搜索正确的块，或者稍后再试。"
+      "blockNotFoundInfo": "找不到您要求的封锁。该块可能存在于Nano网络上，但尚未被节点看到。确保您正在搜索正确的块，或者稍后再试。",
+      "successorBlock": "后继区块",
+      "lastAccountBlock": "此块是帐户上的最新块",
+      "matchingSendBlock": "匹配发送块",
+      "noMatchingSendBlock": "未找到匹配块"
     },
     "representatives": {
       "voteDistribution": "投票分配",
@@ -399,7 +437,11 @@
         "q": "按 Q 或单击奖杯以查看您的任务书",
         "m": "按 M 或单击扬声器切换静音"
       },
-      "nanoPotions": "纳米药水"
+      "nanoPotions": "纳米药水",
+      "guide": {
+        "title": "NanoBrowserQuest 指南"
+      },
+      "playerGuide": "玩家指南"
     },
     "statistics": {
       "social": {

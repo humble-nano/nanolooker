@@ -41,7 +41,10 @@
     "comingSoon": "Çok yakında",
     "statistics": "İstatistik",
     "continue": "Devam et",
-    "link": "Bağlantı"
+    "link": "Bağlantı",
+    "noData": "Veri yok",
+    "include": "Katmak",
+    "exclude": "Hariç tutmak"
   },
   "nodeHealth": {
     "nodeReloading": "Nano düğüm yeniden yükleniyor",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "{{knownExchangeList}} 'i dağıtım grafiğinden hariç tutun. Bu hesaplar birleşik tutuyor {{knownExchangeBalance}} NANO",
     "unchecked": "İndirilmiş ancak henüz Nano düğümü tarafından işlenmemiş bloklar (işlemler). Düğüm yazılımı, diğer düğümlerdeki tüm engelleri kontrol edilmemiş olarak indirir, bunları işler ve blok sayısına ekler, her hesap için sınır bloklarını onaylar ve ardından bunları yapıştırılmış olarak işaretler.",
     "cemented": "Belirli bir düğüm, hesabın onay yüksekliğini (düğüm veritabanında) onaylanan işlemin şimdi daha yüksek olan blok yüksekliğine ayarlayarak onaylanmış bir işlemi yerel olarak geri çevrilemez olarak işaretlediğinde. Çimentolama, düğüm düzeyinde bir işlemdir.",
-    "unknownLastTransaction": "İşlem tarihleri Şubat 2019'da tanıtıldı. Bu tarihten önce işlem saatleri düğümlere yerel olarak kaydedilmiyordu. Son işlem tarihinin bilinmemesinin nedeni, tarihler kaydedilmeden veya NanoLooker düğümü hizmete girmeden önce onaylanmış olmasıdır.",
+    "unknownTransactionDate": "İşlem tarihleri Şubat 2019'da tanıtıldı. Bu tarihten önce işlem saatleri düğümlere yerel olarak kaydedilmiyordu. Son işlem tarihinin bilinmemesinin nedeni, tarihler kaydedilmeden veya NanoLooker düğümü hizmete girmeden önce onaylanmış olmasıdır.",
     "confirmationHeight": "Yerel düğüm veritabanında saklanan ve bir hesap zincirindeki en yüksek (en son) doğrulanmış bloğu temsil eden sayı. Blok yüksekliğiyle ilgili (ancak bundan farklı).",
     "blockHeight": "Bir hesap zincirindeki bir bloğun sırasını temsil eden yerel bir tamsayı değeri. Örneğin, bir hesaptaki 15. bloğun blok yüksekliği 15 olacaktır. Onay yüksekliğiyle ilgili (ancak farklı).",
     "bookmarks": "{{type, capitalize}} yer imleri cihazınıza kaydedilir. Bilinen {{type}} 'lerinizi onlara takma adlar vererek yönetebilirsiniz.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Bir sürümün ağın fikir birliğini devralması için, minimum {{onlineWeightMinimum}} NANO'dan çevrimiçi oy ağırlığının% 67'sine sahip olması gerekir.",
     "onChainVolume": "Ağda onaylanan tüm NANO işlemlerinin toplamı. Aynı gün A kullanıcısı 1 NANO gönderir ve B kullanıcısı 1 NANO alırsa, 2 işlem yayınlanıp onaylandığı için gönderme ve alma olmak üzere günlük hacme 2 NANO eklenir.",
     "pendingTransactionCount": "Alacak işlemlerinin sayısı, görüntülenen {{count}} sınırını aşıyor.",
-    "pendingTransaction": "Para bu hesaba gönderildi, ancak sahibi henüz parayı cebe indirmedi. Yalnızca hesabın sahibi alınan bir işlemi blok zincirine yazabilir. Bu sizin hesabınızsa, cüzdanınızın kilidini açın, alıcı blok genellikle otomatik olarak yayınlanır."
+    "pendingTransaction": "Para bu hesaba gönderildi, ancak sahibi henüz parayı cebe indirmedi. Yalnızca hesabın sahibi alınan bir işlemi blok zincirine yazabilir. Bu sizin hesabınızsa, cüzdanınızın kilidini açın, alıcı blok genellikle otomatik olarak yayınlanır.",
+    "socialStatistics": "İstatistikler, CoinGecko'nun piyasa değerine göre en iyi 200 kripto para birimi kullanılarak derlenir.",
+    "dailyBalance": "İşlem grafiği yalnızca hesapta 1 günden fazla veri varsa ve işlemlerin zaman damgaları varsa görünür",
+    "senderFilter": "Belirli bir adresten yalnızca tüm gönderme işlemlerini dahil etmek veya hariç tutmak için blokları filtreleyin. Birden çok adresi filtrelemek için bunları virgülle ayırın.",
+    "receiverFilter": "Belirli bir adresten yalnızca tüm gönderme işlemlerini dahil etmek veya hariç tutmak için blokları filtreleyin. Birden çok adresi filtrelemek için bunları virgülle ayırın.",
+    "filterTransactions": "Yalnızca 5.000'den az onaylanmış işlemi olan hesaplar filtrelenebilir"
   },
   "search": {
     "searchBy": "Adres / Blok / Bilinen Hesap ile Ara",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Oy ağırlığı",
       "percentNetworkVotingWeight": "ağ oylama ağırlığının yüzdesi",
-      "percentRepresentativeVotingWeight": "Temsilcinin oy ağırlığının yüzdesi",
       "noRepresentative": "Temsilci Yok",
       "confirmationHeight": "Onay yüksekliği",
       "lastTransaction": "Son işlem",
       "loadMoreTransactions": "Daha fazla işlem yükle",
       "viewTransactions": "İşlemleri görüntüleyin",
-      "notOpenedYet": "Bu hesap henüz açılmadı",
-      "notOpenedYetReason": "Hesap adresi geçerliyken, zincirinde henüz blok yayınlanmamıştır. NANO bu hesaba gönderilmişse, parayı cebe indirmek için yine de karşılık gelen bir blok yayınlaması gerekir.",
       "missingAccount": "Eksik hesap",
       "missingAccountInfo": "Hesap URL'de belirtilmemiştir. Bir hesabı aramak için üstteki arama çubuğunu kullanın veya URL'ye /account/ sonrasına ekleyin.",
       "notVoting": "Oy Vermemek",
       "pendingTransactions": "Alınmaya hazır işlemler",
-      "pendingTransaction": "İşlem alınmaya hazır"
+      "pendingTransaction": "İşlem alınmaya hazır",
+      "dailyBalanceOption": " Günlük bakiye",
+      "byTransactionOption": "İşlem bazında bakiye",
+      "dailyBalance": "Son {{count}} işlem",
+      "notOpenedYet": "Bu hesapta herhangi bir işlem yok",
+      "notOpenedYetReason": "Hesap geçerli olmakla birlikte, zincirine henüz blok eklenmedi. Bu hesaba NANO gönderildiyse, kullanmakta olduğunuz hizmetin henüz yayınlamaması veya geçici ağ koşulları nedeniyle NanoLooker düğümü işlemi henüz almamış olabilir.",
+      "dateRange": "Tarih aralığı",
+      "includeNoTimestamp": "Tarihsiz blokları dahil et",
+      "excludeUnknownAccounts": "Yalnızca bilinen hesaplardan gelen blokları göster",
+      "advancedOptions": "Gelişmiş seçenekler",
+      "applyFilters": "Filtreleri uygula",
+      "fields": "Alanlar",
+      "delimiter": "sınırlayıcı",
+      "delimiterComma": "Virgül",
+      "delimiterSemicolon": "Noktalı virgül",
+      "delimiterTab": "Sekme",
+      "delimiterSpace": "Uzay",
+      "delimiterPipe": "Boru",
+      "fileName": "Dosya adı",
+      "minimum": "Asgari",
+      "maximum": "Maksimum",
+      "from": "İtibaren",
+      "to": "İle",
+      "startDate": "Başlangıç tarihi",
+      "endDate": "Bitiş tarihi",
+      "exportToCsv": "CSV'ye aktar",
+      "export": "İhracat",
+      "exportTransactions": "{{count}} işlemi CSV'ye aktar",
+      "reverse": "İşlem sırasını tersine çevir",
+      "sumAmounts": "Tutarları topla"
     },
     "block": {
       "blockSubtype": "Alt türü engelle",
@@ -200,7 +234,11 @@
       "missingBlock": "Eksik blok",
       "missingBlockInfo": "Blok URL'de belirtilmemiştir. Bir blok aramak için üstteki arama çubuğunu kullanın veya bunu URL'ye /block/ sonrasına ekleyin.",
       "blockNotFound": "Blok bulunamadı",
-      "blockNotFoundInfo": "İstediğiniz blok bulunamadı. Bloğun Nano ağında mevcut olması ancak düğüm tarafından henüz görülmemiş olması mümkündür. Doğru bloğu aradığınızdan emin olun veya daha sonra tekrar deneyin."
+      "blockNotFoundInfo": "İstediğiniz blok bulunamadı. Bloğun Nano ağında mevcut olması ancak düğüm tarafından henüz görülmemiş olması mümkündür. Doğru bloğu aradığınızdan emin olun veya daha sonra tekrar deneyin.",
+      "successorBlock": "ardıl blok",
+      "lastAccountBlock": "Bu Blok, hesaptaki en son bloktur",
+      "matchingSendBlock": "Eşleşen gönderme bloğu",
+      "noMatchingSendBlock": "Eşleşen blok bulunamadı"
     },
     "representatives": {
       "voteDistribution": "Oy dağıtımı",
@@ -399,7 +437,11 @@
         "q": "Quest kitabınızı görüntülemek için Q'ya basın veya kupaya tıklayın",
         "m": "Sesi kapatmak için M tuşuna basın veya hoparlörü tıklayın"
       },
-      "nanoPotions": "NANO İksirler"
+      "nanoPotions": "NANO İksirler",
+      "guide": {
+        "title": "NanoBrowserQuest Kılavuzu"
+      },
+      "playerGuide": "Oyuncu Kılavuzu"
     },
     "statistics": {
       "social": {

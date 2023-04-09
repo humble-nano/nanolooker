@@ -41,7 +41,10 @@
     "comingSoon": "Bientôt disponible",
     "statistics": "Statistiques",
     "continue": "Continuer",
-    "link": "Lien"
+    "link": "Lien",
+    "noData": "Pas de données",
+    "include": "Inclure",
+    "exclude": "Exclure"
   },
   "nodeHealth": {
     "nodeReloading": "Le nœud Nano est en cours de rechargement",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Exclure {{knownExchangeList}} du diagramme de distribution. Ces comptes combinés contiennent {{knownExchangeBalance}} NANO",
     "unchecked": "Blocs (transactions) qui ont été téléchargés mais pas encore traités par le nœud Nano. Le logiciel de nœud télécharge tous les bocks des autres nœuds comme non vérifiés, les traite et les ajoute au nombre de blocs, confirme les blocs de frontière pour chaque compte, puis les marque comme cimentés.",
     "cemented": "Lorsqu'un nœud spécifique marque une transaction confirmée comme irréversible localement en définissant la hauteur de confirmation du compte (dans la base de données des nœuds) sur la hauteur de bloc désormais plus élevée de la transaction confirmée. Le cimentage est une opération au niveau du nœud.",
-    "unknownLastTransaction": "Les dates de transaction ont été introduites en février 2019. Avant cette date, les heures de transaction n'étaient pas enregistrées localement sur les nœuds. La raison pour laquelle la date de la dernière transaction est inconnue est qu'elle a été confirmée avant l'enregistrement des dates ou avant la mise en service du nœud NanoLooker.",
+    "unknownTransactionDate": "Les dates de transaction ont été introduites en février 2019. Avant cette date, les heures de transaction n'étaient pas enregistrées localement sur les nœuds. La raison pour laquelle la date de la dernière transaction est inconnue est qu'elle a été confirmée avant l'enregistrement des dates ou avant la mise en service du nœud NanoLooker.",
     "confirmationHeight": "Nombre stocké dans la base de données des nœuds locaux qui représente le bloc confirmé le plus élevé (le plus récent) d'une chaîne de comptes. Lié à (mais différent de) la hauteur du bloc.",
     "blockHeight": "Valeur entière locale qui représente l'ordre d'un bloc dans une chaîne de comptes. Par exemple, le 15e bloc d'un compte aurait une hauteur de bloc de 15. Lié à (mais différent de) la hauteur de confirmation.",
     "bookmarks": "Les {{type, capitalize}} favoris sont enregistrés sur votre appareil. Vous pouvez gérer vos {{type}} connus en leur donnant des alias.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Pour qu'une version reprenne le consensus du réseau, elle doit avoir {{onlineWeightQuorumPercent}}% du poids du vote en ligne sur un minimum de {{onlineWeightMinimum}} NANO.",
     "onChainVolume": "La somme de toutes les transactions NANO qui ont été confirmées sur le réseau. Si l'utilisateur A envoie 1 NANO et que l'utilisateur B reçoit 1 NANO le même jour, 2 NANO seront ajoutés au volume quotidien car 2 transactions ont été diffusées et confirmées, un envoi et une réception.",
     "pendingTransactionCount": "Le nombre de transactions à recevoir dépasse la limite affichée de {{count}}.",
-    "pendingTransaction": "Des fonds ont été envoyés sur ce compte mais le propriétaire n'a pas encore empoché les fonds. Seul le propriétaire du compte peut écrire une transaction reçue dans sa blockchain. S'il s'agit de votre compte, déverrouillez votre portefeuille, le blocage de réception est généralement automatiquement diffusé."
+    "pendingTransaction": "Des fonds ont été envoyés sur ce compte mais le propriétaire n'a pas encore empoché les fonds. Seul le propriétaire du compte peut écrire une transaction reçue dans sa blockchain. S'il s'agit de votre compte, déverrouillez votre portefeuille, le blocage de réception est généralement automatiquement diffusé.",
+    "socialStatistics": "Les statistiques sont compilées à partir des 200 principales crypto-monnaies par capitalisation boursière de CoinGecko.",
+    "dailyBalance": "Le graphique des transactions n'est visible que si le compte a plus d'un jour de données et si les transactions ont des horodatages",
+    "senderFilter": "Filtrez les blocs pour inclure uniquement ou exclure toutes les transactions d'envoi à partir d'une adresse spécifique. Pour filtrer plusieurs adresses, séparez-les par une virgule.",
+    "receiverFilter": "Filtrez les blocs pour inclure uniquement ou exclure toutes les transactions d'envoi à partir d'une adresse spécifique. Pour filtrer plusieurs adresses, séparez-les par une virgule.",
+    "filterTransactions": "Seuls les comptes avec un nombre égal ou inférieur à 5 000 transactions confirmées peuvent être filtrés"
   },
   "search": {
     "searchBy": "Recherche par Adresse / Bloc / Compte Connu",
@@ -127,7 +135,7 @@
     "exchangeTracker": "Suivi des plateforme d'échanges",
     "faucets": "Faucets",
     "news": "Actualités",
-    "nodeStatus": "Statut du nœuds",
+    "nodeStatus": "Statut du nœud",
     "whatIsNano": "Qu'est-ce que Nano?",
     "earnNano": "Gagner des Nano",
     "preferences": "Préférences",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Poids du vote",
       "percentNetworkVotingWeight": "% du poids des votes du réseau",
-      "percentRepresentativeVotingWeight": "% du poids des votes du représentant",
       "noRepresentative": "Pas de Représentant",
       "confirmationHeight": "Hauteur de confirmation",
       "lastTransaction": "Dernière transaction",
       "loadMoreTransactions": "Voir plus de transactions",
       "viewTransactions": "Voir les transactions",
-      "notOpenedYet": "Ce compte n'a pas encore été ouvert",
-      "notOpenedYetReason": "Bien que l'adresse du compte soit valide, aucun bloc n'a encore été publié dans sa chaîne. Si du NANO a été envoyé sur ce compte, un bloc correspondant doit encore être publié pour recevoir les fonds.",
       "missingAccount": "Compte manquant",
       "missingAccountInfo": "Le compte n'est pas spécifié dans l'URL. Utilisez la barre de recherche pour rechercher un compte ou ajoutez-le dans l'URL après /account/",
-      "notVoting": "Ne pas voter",
+      "notVoting": "Ne vote pas",
       "pendingTransactions": "Transactions prêtes à être reçues",
-      "pendingTransaction": "Transaction prête à être reçue"
+      "pendingTransaction": "Transaction prête à être reçue",
+      "dailyBalanceOption": " Solde journalier",
+      "byTransactionOption": "Solde par transaction",
+      "dailyBalance": "{{count}} dernières transactions",
+      "notOpenedYet": "Ce compte n'a aucune transaction",
+      "notOpenedYetReason": "Tant que le compte est valide, aucun bloc n'a encore été ajouté à sa chaîne. Si NANO a été envoyé à ce compte, il est possible que le nœud NanoLooker n'ait pas encore reçu la transaction car le service que vous utilisez ne l'a pas encore diffusée ou en raison de conditions réseau temporaires.",
+      "dateRange": "Plage de dates",
+      "includeNoTimestamp": "Inclure les blocs sans date",
+      "excludeUnknownAccounts": "Afficher uniquement les blocs des comptes connus",
+      "advancedOptions": "Options avancées",
+      "applyFilters": "Appliquer des filtres",
+      "fields": "Des champs",
+      "delimiter": "Délimiteur",
+      "delimiterComma": "Virgule",
+      "delimiterSemicolon": "Point-virgule",
+      "delimiterTab": "Languette",
+      "delimiterSpace": "Espace",
+      "delimiterPipe": "Tuyau",
+      "fileName": "Nom de fichier",
+      "minimum": "Le minimum",
+      "maximum": "Maximum",
+      "from": "De",
+      "to": "À",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "exportToCsv": "Exporter vers CSV",
+      "export": "Exporter",
+      "exportTransactions": "Exporter {{count}} transactions vers CSV",
+      "reverse": "Inverser l'ordre de transaction",
+      "sumAmounts": "Faire la somme des sommes"
     },
     "block": {
       "blockSubtype": "Sous-type de bloc",
@@ -200,7 +234,11 @@
       "missingBlock": "Bloc manquant",
       "missingBlockInfo": "Le bloc n'est pas spécifié dans l'URL. Utilisez la barre de recherche pour rechercher un bloc ou ajoutez-le dans l'URL après /block/",
       "blockNotFound": "Bloc non trouvé",
-      "blockNotFoundInfo": "Le bloc que vous avez demandé est introuvable. Il est possible que le bloc soit présent sur le réseau Nano mais n'ait pas encore été vu par le nœud. Assurez-vous que vous recherchez le bon bloc ou réessayez plus tard."
+      "blockNotFoundInfo": "Le bloc que vous avez demandé est introuvable. Il est possible que le bloc soit présent sur le réseau Nano mais n'ait pas encore été vu par le nœud. Assurez-vous que vous recherchez le bon bloc ou réessayez plus tard.",
+      "successorBlock": "Bloc successeur",
+      "lastAccountBlock": "Ce bloc est le plus récent sur le compte",
+      "matchingSendBlock": "Bloc d'envoi correspondant",
+      "noMatchingSendBlock": "Aucun bloc correspondant trouvé"
     },
     "representatives": {
       "voteDistribution": "Répartition des votes",
@@ -281,8 +319,8 @@
     "status": {
       "reload": "Recharger",
       "count": "Total",
-      "unchecked": "Non vérifié",
-      "cemented": "Cimenté",
+      "unchecked": "Non vérifiés",
+      "cemented": "Cimentés",
       "ledger": "Registre",
       "availableSupply": "Approvisionnement disponible",
       "ledgerSize": "Taille du registre",
@@ -380,7 +418,7 @@
       "leaderboard": "Classement",
       "rank": "Rang",
       "player": "Joueur",
-      "exp": "Vivre",
+      "exp": "Expérience",
       "level": "Niveau",
       "gameDescription": "NanoBrowserQuest est un remake du populaire mini-jeu MMORPG Web BrowserQuest qui a été créé vers 2012. Le jeu prend en charge 200 joueurs simultanés et est gratuit. NanoBrowserQuest vous permet de jouer avec vos amis, de terminer des réalisations dans le jeu et d'obtenir une petite récompense Nano après avoir terminé le jeu.",
       "howToPlay": "Comment jouer",
@@ -399,7 +437,11 @@
         "q": "Appuyez sur Q ou cliquez sur le trophée pour afficher votre livre de quêtes",
         "m": "Appuyez sur M ou cliquez sur le haut-parleur pour activer le mode Muet"
       },
-      "nanoPotions": "NANO-potions"
+      "nanoPotions": "NANO-potions",
+      "guide": {
+        "title": "Guide NanoBrowserQuest"
+      },
+      "playerGuide": "Guide du joueur"
     },
     "statistics": {
       "social": {

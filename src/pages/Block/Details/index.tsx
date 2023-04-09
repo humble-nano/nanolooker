@@ -22,7 +22,7 @@ import {
   timestampToDate,
   isValidAccountAddress,
   isValidBlockHash,
-  isOpenAccountBlockHash,
+  isNullAccountBlockHash,
 } from "components/utils";
 import { KnownAccountsContext } from "api/contexts/KnownAccounts";
 import LoadingStatistic from "components/LoadingStatistic";
@@ -34,12 +34,7 @@ const BlockDetails: React.FC = () => {
   const { t } = useTranslation();
   const { theme, fiat } = React.useContext(PreferencesContext);
   const {
-    marketStatistics: {
-      currentPrice,
-      priceStats: { bitcoin: { [fiat]: btcCurrentPrice = 0 } } = {
-        bitcoin: { [fiat]: 0 },
-      },
-    },
+    marketStatistics: { currentPrice, priceStats },
     isInitialLoading: isMarketStatisticsInitialLoading,
   } = React.useContext(MarketStatisticsContext);
   const {
@@ -66,32 +61,38 @@ const BlockDetails: React.FC = () => {
     contents: {
       type = "",
       representative = "",
+      link = "",
       link_as_account: linkAsAccount = "",
       previous = "",
       signature = "",
       work = "",
     } = {},
+    successor,
   } = blockInfo || {};
 
   const modifiedTimestamp = Number(blockInfo?.local_timestamp) * 1000;
-
+  const btcCurrentPrice = priceStats?.bitcoin?.[fiat] || 0;
   const amount = new BigNumber(rawToRai(blockInfo?.amount || 0)).toNumber();
   const fiatAmount = new BigNumber(amount)
     .times(currentPrice)
     .toFormat(CurrencyDecimal?.[fiat]);
-  const btcAmount = new BigNumber(amount)
-    .times(currentPrice)
-    .dividedBy(btcCurrentPrice)
-    .toFormat(12);
+  const btcAmount = btcCurrentPrice
+    ? new BigNumber(amount)
+        .times(currentPrice)
+        .dividedBy(btcCurrentPrice)
+        .toFormat(12)
+    : null;
 
   const balance = new BigNumber(rawToRai(blockInfo?.balance || 0)).toNumber();
   const fiatBalance = new BigNumber(balance)
     .times(currentPrice)
     .toFormat(CurrencyDecimal?.[fiat]);
-  const btcBalance = new BigNumber(balance)
-    .times(currentPrice)
-    .dividedBy(btcCurrentPrice)
-    .toFormat(12);
+  const btcBalance = btcCurrentPrice
+    ? new BigNumber(balance)
+        .times(currentPrice)
+        .dividedBy(btcCurrentPrice)
+        .toFormat(12)
+    : null;
 
   let linkAccountLabel = "";
   if (subtype === "send") {
@@ -216,7 +217,9 @@ const BlockDetails: React.FC = () => {
                   }
                   title={{ width: isSmallAndLower ? "100%" : "33%" }}
                 >
-                  {`${CurrencySymbol?.[fiat]}${fiatAmount} / ${btcAmount} BTC`}
+                  {`${CurrencySymbol?.[fiat]} ${fiatAmount}${
+                    btcAmount ? ` / ${btcAmount} BTC` : ""
+                  }`}
                 </Skeleton>
               </Col>
             </Row>
@@ -229,7 +232,7 @@ const BlockDetails: React.FC = () => {
                   {...skeletonProps}
                   title={{ width: isSmallAndLower ? "100%" : "33%" }}
                 >
-                  Ӿ{new BigNumber(balance).toFormat()}
+                  Ӿ {new BigNumber(balance).toFormat()}
                   <br />
                 </Skeleton>
                 <Skeleton
@@ -239,7 +242,9 @@ const BlockDetails: React.FC = () => {
                   }
                   title={{ width: isSmallAndLower ? "100%" : "33%" }}
                 >
-                  {`${CurrencySymbol?.[fiat]}${fiatBalance} / ${btcBalance} BTC`}
+                  {`${CurrencySymbol?.[fiat]} ${fiatBalance}${
+                    btcBalance ? ` / ${btcBalance} BTC` : ""
+                  }`}
                 </Skeleton>
               </Col>
             </Row>
@@ -329,12 +334,51 @@ const BlockDetails: React.FC = () => {
                       {previous}
                     </Link>
                   ) : null}
-                  {isOpenAccountBlockHash(previous) ? (
+                  {isNullAccountBlockHash(previous) ? (
                     <Text>{t("pages.block.openAccountBlock")}</Text>
                   ) : null}
                 </Skeleton>
               </Col>
             </Row>
+            <Row gutter={6}>
+              <Col xs={24} sm={6} xl={4}>
+                {t("pages.block.successorBlock")}
+              </Col>
+              <Skeleton
+                {...skeletonProps}
+                title={{ width: isSmallAndLower ? "100%" : "50%" }}
+              ></Skeleton>
+              <Col xs={24} sm={18} xl={20}>
+                {isValidBlockHash(successor) ? (
+                  <Link to={`/block/${successor}`} className="break-word">
+                    {successor}
+                  </Link>
+                ) : null}
+                {isNullAccountBlockHash(successor) ? (
+                  <Text>{t("pages.block.lastAccountBlock")}</Text>
+                ) : null}
+              </Col>
+            </Row>
+            {link && subtype === "receive" ? (
+              <Row gutter={6}>
+                <Col xs={24} sm={6} xl={4}>
+                  {t("pages.block.matchingSendBlock")}
+                </Col>
+                <Skeleton
+                  {...skeletonProps}
+                  title={{ width: isSmallAndLower ? "100%" : "50%" }}
+                ></Skeleton>
+                <Col xs={24} sm={18} xl={20}>
+                  {isValidBlockHash(link) ? (
+                    <Link to={`/block/${link}`} className="break-word">
+                      {link}
+                    </Link>
+                  ) : (
+                    t("pages.block.noMatchingSendBlock")
+                  )}
+                </Col>
+              </Row>
+            ) : null}
             <Row gutter={6}>
               <Col xs={24} sm={6} xl={4}>
                 {t("pages.block.signature")}

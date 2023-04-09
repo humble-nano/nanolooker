@@ -1,6 +1,9 @@
 import * as React from "react";
 import find from "lodash/find";
-import { KNOWN_EXCHANGE_ACCOUNTS } from "../../knownAccounts.json";
+import KnownAccounts from "../../knownAccounts.json";
+import { BookmarksContext } from "api/contexts/Bookmarks";
+
+const { KNOWN_EXCHANGE_ACCOUNTS } = KnownAccounts;
 
 export interface KnownAccount {
   account: string;
@@ -25,6 +28,8 @@ export const KnownAccountsContext = React.createContext<Context>({
 });
 
 const Provider: React.FC = ({ children }) => {
+  // @TODO Why does using a useEffect on bookmarks does not update the component
+  const { bookmarks } = React.useContext(BookmarksContext);
   const [knownAccounts, setKnownAccounts] = React.useState(
     [] as KnownAccount[],
   );
@@ -33,6 +38,10 @@ const Provider: React.FC = ({ children }) => {
   );
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
   const [isError, setIsError] = React.useState<boolean>(false);
+
+  const formattedBookmarks = Object.entries(bookmarks?.account || []).map(
+    ([account, alias]) => ({ account, alias }),
+  );
 
   const getKnownAccounts = async () => {
     setIsError(false);
@@ -58,13 +67,14 @@ const Provider: React.FC = ({ children }) => {
 
   React.useEffect(() => {
     getKnownAccounts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <KnownAccountsContext.Provider
       value={{
-        knownAccounts,
+        knownAccounts: knownAccounts.concat(
+          formattedBookmarks as KnownAccount[],
+        ),
         knownExchangeAccounts,
         isLoading,
         isError,

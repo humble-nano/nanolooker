@@ -35,23 +35,28 @@ const getNodePeers = async () => {
 };
 
 let db;
-try {
-  MongoClient.connect(MONGO_URL, MONGO_OPTIONS, (err, client) => {
-    if (err) {
-      throw err;
+let mongoClient;
+
+const connect = async () =>
+  await new Promise((resolve, reject) => {
+    try {
+      MongoClient.connect(MONGO_URL, MONGO_OPTIONS, (err, client) => {
+        if (err) {
+          throw err;
+        }
+        mongoClient = client;
+        db = client.db(MONGO_DB);
+        db.collection(NODE_LOCATIONS).createIndex(
+          { createdAt: 1 },
+          { expireAfterSeconds: EXPIRE_48H },
+        );
+        resolve();
+      });
+    } catch (err) {
+      Sentry.captureException(err);
+      resolve();
     }
-
-    db = client.db(MONGO_DB);
-
-    db.collection(NODE_LOCATIONS).createIndex(
-      { createdAt: 1 },
-      { expireAfterSeconds: EXPIRE_48H },
-    );
   });
-} catch (err) {
-  console.log("Error", err);
-  Sentry.captureException(err);
-}
 
 const getNodeLocation = async ip => {
   try {
@@ -124,12 +129,16 @@ const doNodeLocations = async () => {
       results = results.concat(locationResults);
     }
 
+    await connect();
+
     db.collection(NODE_LOCATIONS).drop();
     db.collection(NODE_LOCATIONS).insertMany(results);
 
     nodeCache.set(NODE_LOCATIONS, results);
 
     console.log("Done node location");
+
+    mongoClient.close();
   } catch (err) {
     console.log("Error", err);
     Sentry.captureException(err);

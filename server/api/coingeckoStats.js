@@ -19,12 +19,12 @@ const {
 
 const DEFAULT_FIAT = "usd";
 
-const allowedFiats = ["usd", "cad", "eur", "gbp", "cny", "jpy"];
+const allowedFiats = ["usd", "cad", "eur", "gbp", "cny", "jpy", "pln"];
 
 const getCoingeckoStats = async ({ fiat, cryptocurrency }) => {
   fiat = allowedFiats.includes(fiat) ? fiat : DEFAULT_FIAT;
 
-  let marketStats = nodeCache.get(`${COINGECKO_MARKET_STATS}-${fiat}`);
+  let marketStats = nodeCache.get(`${COINGECKO_MARKET_STATS}-${fiat}`) || {};
   let priceStats =
     cryptocurrency === "true"
       ? nodeCache.get(`${COINGECKO_ALL_PRICE_STATS}-${fiat}`)

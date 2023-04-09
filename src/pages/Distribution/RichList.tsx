@@ -13,8 +13,9 @@ import {
 } from "api/contexts/Preferences";
 import { MarketStatisticsContext } from "api/contexts/MarketStatistics";
 import { roundOff } from "components/utils";
-import { BURN_ACCOUNT } from "knownAccounts.json";
+import KnownAccounts from "knownAccounts.json";
 
+const { BURN_ACCOUNT } = KnownAccounts;
 const { Title } = Typography;
 
 const RichList: React.FC = () => {
@@ -32,16 +33,12 @@ const RichList: React.FC = () => {
   });
   const { fiat } = React.useContext(PreferencesContext);
   const {
-    marketStatistics: {
-      currentPrice,
-      priceStats: { bitcoin: { [fiat]: btcCurrentPrice = 0 } } = {
-        bitcoin: { [fiat]: 0 },
-      },
-    },
+    marketStatistics: { currentPrice, priceStats },
   } = React.useContext(MarketStatisticsContext);
   const { availableSupply = 123123123 } = useAvailableSupply();
   const isSmallAndLower = !useMediaQuery("(min-width: 576px)");
 
+  const btcCurrentPrice = priceStats?.bitcoin?.[fiat] || 0;
   const startIndex = (currentPage - 1) * perPage + 1;
 
   return (
@@ -101,7 +98,7 @@ const RichList: React.FC = () => {
                   </Link>
                 </Col>
                 <Col sm={6} md={6} xl={4}>
-                  Ӿ{new BigNumber(balance).toFormat()}
+                  Ӿ {new BigNumber(balance).toFormat()}
                   <span
                     className="color-muted"
                     style={{
@@ -122,7 +119,7 @@ const RichList: React.FC = () => {
                 <Col sm={4} md={4} xl={4}>
                   {currentPrice && btcCurrentPrice ? (
                     <>
-                      {`${CurrencySymbol?.[fiat]}${new BigNumber(balance)
+                      {`${CurrencySymbol?.[fiat]} ${new BigNumber(balance)
                         .times(currentPrice)
                         .toFormat(CurrencyDecimal?.[fiat])}`}
                       <span
@@ -152,9 +149,8 @@ const RichList: React.FC = () => {
                     current: currentPage,
                     disabled: false,
                     onChange: (page: number) => {
-                      const element = document.getElementById(
-                        "rich-list-title",
-                      );
+                      const element =
+                        document.getElementById("rich-list-title");
                       element?.scrollIntoView();
 
                       setCurrentPage?.(page);

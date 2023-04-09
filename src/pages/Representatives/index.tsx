@@ -24,15 +24,14 @@ import { DelegatorsContext } from "api/contexts/Delegators";
 import QuestionCircle from "components/QuestionCircle";
 import { rawToRai, TwoToneColors } from "components/utils";
 import PieChart from "./PieChart";
+import useRepresentative from "api/hooks/use-representative";
 
 const { Title } = Typography;
 
 const Representatives = () => {
   const { t } = useTranslation();
-  const [
-    isIncludeOfflineRepresentatives,
-    setIsIncludeOfflineRepresentatives,
-  ] = React.useState(false);
+  const [isIncludeOfflineRepresentatives, setIsIncludeOfflineRepresentatives] =
+    React.useState(false);
   const [isGroupedByEntities, setIsGroupedByEntities] = React.useState(true);
   const [
     isShowingNonVotingRepresentatives,
@@ -43,10 +42,9 @@ const Representatives = () => {
   );
   const isSmallAndLower = !useMediaQuery("(min-width: 576px)");
   const { theme } = React.useContext(PreferencesContext);
-  const {
-    representatives,
-    isLoading: isRepresentativesLoading,
-  } = React.useContext(RepresentativesContext);
+  const { representatives, isLoading: isRepresentativesLoading } =
+    React.useContext(RepresentativesContext);
+  const { representative: telemetryRepresentatives } = useRepresentative();
 
   const {
     confirmationQuorum: {
@@ -212,7 +210,7 @@ const Representatives = () => {
               </Col>
               <Col xs={24} sm={16}>
                 <Skeleton {...confirmationQuorumSkeletonProps}>
-                  Ӿ{new BigNumber(principalRepresentativeMinWeight).toFormat()}
+                  Ӿ {new BigNumber(principalRepresentativeMinWeight).toFormat()}
                 </Skeleton>
               </Col>
             </Row>
@@ -233,7 +231,7 @@ const Representatives = () => {
               <Col xs={24} sm={16}>
                 {" "}
                 <Skeleton {...confirmationQuorumSkeletonProps}>
-                  Ӿ{new BigNumber(rawToRai(onlineWeightMinimum)).toFormat()}
+                  Ӿ {new BigNumber(rawToRai(onlineWeightMinimum)).toFormat()}
                 </Skeleton>
               </Col>
             </Row>
@@ -243,7 +241,7 @@ const Representatives = () => {
               </Col>
               <Col xs={24} sm={16}>
                 <Skeleton {...confirmationQuorumSkeletonProps}>
-                  Ӿ{new BigNumber(rawToRai(onlineStakeTotal)).toFormat(0)}
+                  Ӿ {new BigNumber(rawToRai(onlineStakeTotal)).toFormat(0)}
                 </Skeleton>
               </Col>
             </Row>
@@ -253,7 +251,7 @@ const Representatives = () => {
               </Col>
               <Col xs={24} sm={16}>
                 <Skeleton {...confirmationQuorumSkeletonProps}>
-                  Ӿ{new BigNumber(rawToRai(peersStakeTotal)).toFormat(0)}
+                  Ӿ {new BigNumber(rawToRai(peersStakeTotal)).toFormat(0)}
                 </Skeleton>
               </Col>
             </Row>
@@ -317,6 +315,8 @@ const Representatives = () => {
             {filteredRepresentatives.map(
               ({ account, weight, isOnline, isPrincipal, alias }) => {
                 const delegatorsCount = allDelegators[account];
+                const telemetryRepresentative =
+                  telemetryRepresentatives?.[account];
                 return (
                   <Row gutter={6} key={account}>
                     <Col
@@ -331,7 +331,7 @@ const Representatives = () => {
                           display: "block",
                         }}
                       >
-                        Ӿ{weight}
+                        Ӿ {weight}
                       </span>
 
                       {isPrincipal ? (
@@ -371,6 +371,20 @@ const Representatives = () => {
                         ) : null}
                         {isPrincipal ? (
                           <Tag>{t("common.principalRepresentative")}</Tag>
+                        ) : null}
+
+                        {telemetryRepresentative?.version ? (
+                          <Tag
+                            color={
+                              !telemetryRepresentative.isLatestVersion
+                                ? theme === Theme.DARK
+                                  ? TwoToneColors.WARNING_DARK
+                                  : TwoToneColors.WARNING
+                                : undefined
+                            }
+                          >
+                            v{telemetryRepresentative.version}
+                          </Tag>
                         ) : null}
                       </div>
 

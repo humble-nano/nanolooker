@@ -41,7 +41,10 @@
     "comingSoon": "Sắp có",
     "statistics": "Số liệu thống kê",
     "continue": "Tiếp tục",
-    "link": "Liên kết"
+    "link": "Liên kết",
+    "noData": "Không có dữ liệu",
+    "include": "Bao gồm",
+    "exclude": "Loại trừ"
   },
   "nodeHealth": {
     "nodeReloading": "Nút nano đang tải lại",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Loại trừ {{knownExchangeList}} khỏi biểu đồ phân phối. Các tài khoản đó kết hợp giữ {{knownExchangeBalance}} NANO",
     "unchecked": "Các khối (giao dịch) đã được tải xuống nhưng chưa được xử lý bởi nút Nano. Phần mềm nút tải xuống tất cả các bocks từ các nút khác dưới dạng không được chọn, xử lý chúng và thêm vào số lượng khối, xác nhận các khối biên giới cho mỗi tài khoản và sau đó đánh dấu chúng là đã gắn kết.",
     "cemented": "Khi một nút cụ thể đánh dấu một giao dịch đã xác nhận là không thể đảo ngược cục bộ bằng cách đặt chiều cao xác nhận của tài khoản (trong cơ sở dữ liệu nút) thành chiều cao khối hiện tại cao hơn của giao dịch đã xác nhận. Xi măng là một hoạt động ở cấp độ nút.",
-    "unknownLastTransaction": "Ngày giao dịch được giới thiệu vào tháng 2 năm 2019. Trước ngày đó, thời gian giao dịch không được ghi lại cục bộ trên các nút. Lý do tại sao ngày giao dịch cuối cùng không được xác định là vì nó đã được xác nhận trước khi ngày tháng được ghi lại hoặc trước khi nút NanoLooker đi vào hoạt động.",
+    "unknownTransactionDate": "Ngày giao dịch được giới thiệu vào tháng 2 năm 2019. Trước ngày đó, thời gian giao dịch không được ghi lại cục bộ trên các nút. Lý do tại sao ngày giao dịch cuối cùng không được xác định là vì nó đã được xác nhận trước khi ngày tháng được ghi lại hoặc trước khi nút NanoLooker đi vào hoạt động.",
     "confirmationHeight": "Một số được lưu trữ trong cơ sở dữ liệu nút cục bộ đại diện cho khối được xác nhận cao nhất (gần đây nhất) trong chuỗi tài khoản. Liên quan đến (nhưng khác với) chiều cao khối.",
     "blockHeight": "Giá trị số nguyên cục bộ đại diện cho thứ tự của một khối trong chuỗi tài khoản. Ví dụ: khối thứ 15 trong tài khoản sẽ có chiều cao khối là 15. Liên quan đến (nhưng khác với) chiều cao xác nhận.",
     "bookmarks": "Dấu trang {{type, capitalize}} được lưu trên thiết bị của bạn. Bạn có thể quản lý các {{type}} đã biết của mình bằng cách đặt bí danh cho chúng.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Để một phiên bản chiếm được sự đồng thuận của mạng, phiên bản đó cần có {{onlineWeightQuorumPercent}}% trọng lượng bỏ phiếu trực tuyến từ tối thiểu là {{onlineWeightMinimum}} NANO.",
     "onChainVolume": "Tổng của tất cả các giao dịch NANO đã được xác nhận trên mạng. Nếu người dùng A gửi 1 NANO và người dùng B nhận được 1 NANO trong cùng một ngày, thì 2 NANO sẽ được thêm vào khối lượng hàng ngày vì 2 giao dịch đã được phát và xác nhận, một gửi và một nhận.",
     "pendingTransactionCount": "Số lượng giao dịch phải thu vượt quá giới hạn hiển thị là {{count}}.",
-    "pendingTransaction": "Tiền đã được gửi đến tài khoản này nhưng chủ sở hữu vẫn chưa bỏ túi tiền. Chỉ chủ sở hữu tài khoản mới có thể ghi giao dịch đã nhận vào blockchain của họ. Nếu đây là tài khoản của bạn, hãy mở khóa ví của bạn, khối nhận thường được phát tự động."
+    "pendingTransaction": "Tiền đã được gửi đến tài khoản này nhưng chủ sở hữu vẫn chưa bỏ túi tiền. Chỉ chủ sở hữu tài khoản mới có thể ghi giao dịch đã nhận vào blockchain của họ. Nếu đây là tài khoản của bạn, hãy mở khóa ví của bạn, khối nhận thường được phát tự động.",
+    "socialStatistics": "Thống kê được tổng hợp bằng cách sử dụng 200 loại tiền điện tử hàng đầu theo vốn hóa thị trường từ CoinGecko.",
+    "dailyBalance": "Biểu đồ giao dịch chỉ hiển thị nếu tài khoản có dữ liệu hơn 1 ngày và nếu các giao dịch có dấu thời gian",
+    "senderFilter": "Lọc các khối để chỉ bao gồm hoặc loại trừ tất cả các giao dịch gửi từ một địa chỉ cụ thể. Để lọc nhiều địa chỉ, hãy phân tách chúng bằng dấu phẩy.",
+    "receiverFilter": "Lọc các khối để chỉ bao gồm hoặc loại trừ tất cả các giao dịch gửi từ một địa chỉ cụ thể. Để lọc nhiều địa chỉ, hãy phân tách chúng bằng dấu phẩy.",
+    "filterTransactions": "Chỉ những tài khoản có số lượng bằng hoặc ít hơn 5.000 giao dịch được xác nhận mới có thể được lọc"
   },
   "search": {
     "searchBy": "Tìm kiếm theo Địa chỉ / Khối / Tài khoản Đã biết",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Số phiếu bầu",
       "percentNetworkVotingWeight": "% trọng lượng biểu quyết của mạng",
-      "percentRepresentativeVotingWeight": "% trọng số biểu quyết của người đại diện",
       "noRepresentative": "Không có đại diện",
       "confirmationHeight": "Chiều cao xác nhận",
       "lastTransaction": "Giao dịch cuối cùng",
       "loadMoreTransactions": "Tải nhiều giao dịch hơn",
       "viewTransactions": "Xem các giao dịch",
-      "notOpenedYet": "Tài khoản này chưa được mở",
-      "notOpenedYetReason": "Mặc dù địa chỉ tài khoản hợp lệ, nhưng chưa có khối nào được xuất bản vào chuỗi của nó. Nếu NANO đã được gửi đến tài khoản này, nó vẫn cần xuất bản một khối tương ứng để bỏ túi tiền.",
       "missingAccount": "Thiếu tài khoản",
       "missingAccountInfo": "Tài khoản không được chỉ định trong URL. Sử dụng thanh tìm kiếm trên cùng để tìm kiếm tài khoản hoặc thêm tài khoản vào URL sau /account/",
       "notVoting": "Không bỏ phiếu",
       "pendingTransactions": "Giao dịch đã sẵn sàng để nhận",
-      "pendingTransaction": "Giao dịch đã sẵn sàng để nhận"
+      "pendingTransaction": "Giao dịch đã sẵn sàng để nhận",
+      "dailyBalanceOption": " Số dư hàng ngày",
+      "byTransactionOption": "Số dư theo giao dịch",
+      "dailyBalance": "{{Count}} giao dịch gần đây nhất",
+      "notOpenedYet": "Tài khoản này không có bất kỳ giao dịch nào",
+      "notOpenedYetReason": "Mặc dù tài khoản hợp lệ nhưng chưa có khối nào được thêm vào chuỗi của nó. Nếu NANO đã được gửi đến tài khoản này, có thể nút NanoLooker chưa nhận được giao dịch do dịch vụ bạn đang sử dụng chưa phát sóng hoặc do điều kiện mạng tạm thời.",
+      "dateRange": "Phạm vi ngày",
+      "includeNoTimestamp": "Bao gồm các khối không có ngày tháng",
+      "excludeUnknownAccounts": "Chỉ hiển thị các khối từ các tài khoản đã biết",
+      "advancedOptions": "Tùy chọn nâng cao",
+      "applyFilters": "Áp dụng các bộ lọc",
+      "fields": "Lĩnh vực",
+      "delimiter": "Dấu phân cách",
+      "delimiterComma": "Dấu phẩy",
+      "delimiterSemicolon": "Dấu chấm phẩy",
+      "delimiterTab": "Chuyển hướng",
+      "delimiterSpace": "Không gian",
+      "delimiterPipe": "Đường ống",
+      "fileName": "Tên tệp",
+      "minimum": "Tối thiểu",
+      "maximum": "Tối đa",
+      "from": "Từ",
+      "to": "Đến",
+      "startDate": "Ngày bắt đầu",
+      "endDate": "Ngày cuối",
+      "exportToCsv": "Xuất sang CSV",
+      "export": "Xuất khẩu",
+      "exportTransactions": "Xuất giao dịch {{count}} sang CSV",
+      "reverse": "đảo ngược thứ tự giao dịch",
+      "sumAmounts": "Tổng số tiền"
     },
     "block": {
       "blockSubtype": "Block con",
@@ -200,7 +234,11 @@
       "missingBlock": "Thiếu khối",
       "missingBlockInfo": "Khối không được chỉ định trong URL. Sử dụng thanh tìm kiếm trên cùng để tìm kiếm một khối hoặc thêm khối đó vào URL sau /block/",
       "blockNotFound": "Không tìm thấy khối",
-      "blockNotFoundInfo": "Không tìm thấy khối bạn yêu cầu. Có thể khối hiện diện trên mạng Nano nhưng nút vẫn chưa được nhìn thấy. Đảm bảo rằng bạn đang tìm kiếm đúng khối hoặc thử lại sau."
+      "blockNotFoundInfo": "Không tìm thấy khối bạn yêu cầu. Có thể khối hiện diện trên mạng Nano nhưng nút vẫn chưa được nhìn thấy. Đảm bảo rằng bạn đang tìm kiếm đúng khối hoặc thử lại sau.",
+      "successorBlock": "Khối kế thừa",
+      "lastAccountBlock": "Khối này là lần gần đây nhất trên tài khoản",
+      "matchingSendBlock": "Đối sánh khối gửi",
+      "noMatchingSendBlock": "Không tìm thấy khối phù hợp"
     },
     "representatives": {
       "voteDistribution": "Phân phối phiếu bầu",
@@ -399,7 +437,11 @@
         "q": "Nhấn Q hoặc nhấp vào cúp để xem sách Nhiệm vụ của bạn",
         "m": "Nhấn M hoặc nhấp vào loa để chuyển đổi Tắt tiếng"
       },
-      "nanoPotions": "NANO Potions"
+      "nanoPotions": "NANO Potions",
+      "guide": {
+        "title": "Hướng dẫn NanoBrowserQuest"
+      },
+      "playerGuide": "Hướng dẫn người chơi"
     },
     "statistics": {
       "social": {

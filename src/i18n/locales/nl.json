@@ -41,7 +41,10 @@
     "comingSoon": "Binnenkort beschikbaar",
     "statistics": "Statistieken",
     "continue": "Doorgaan met",
-    "link": "Koppeling"
+    "link": "Koppeling",
+    "noData": "Geen gegevens",
+    "include": "Erbij betrekken",
+    "exclude": "Uitsluiten"
   },
   "nodeHealth": {
     "nodeReloading": "Nano node wordt opnieuw geladen",
@@ -77,7 +80,7 @@
     "knownExchangeBalance": "Sluit {{knownExchangeList}} uit van het distributiegrafiek. Die accounts gecombineerd bevatten {{knownExchangeBalance}} NANO",
     "unchecked": "Blocks (transacties) die zijn gedownload maar nog niet verwerkt door de Nano node. De node software downloadt alle blockken van andere nodes als ongecontroleerd, verwerkt ze en voegt toe aan het aantal blockken, bevestigt de grensblockken voor elk account en markeert ze vervolgens als gecementeerd.",
     "cemented": "Wanneer een specifieke node een bevestigde transactie markeert als lokaal onomkeerbaar door de bevestigingshoogte van de account (in de node database) in te stellen op de nu hogere blockhoogte van de bevestigde transactie. Cementeren is een bewerking op node niveau.",
-    "unknownLastTransaction": "In februari 2019 zijn transactiedata geïntroduceerd. Voorafgaand aan die datum werden de transactietijden niet lokaal op de nodes geregistreerd. De reden waarom de laatste transactiedatum onbekend is, is omdat deze werd bevestigd voordat de datums werden geregistreerd of voordat de NanoLooker node in gebruik was.",
+    "unknownTransactionDate": "In februari 2019 zijn transactiedata geïntroduceerd. Voorafgaand aan die datum werden de transactietijden niet lokaal op de nodes geregistreerd. De reden waarom de laatste transactiedatum onbekend is, is omdat deze werd bevestigd voordat de datums werden geregistreerd of voordat de NanoLooker node in gebruik was.",
     "confirmationHeight": "Een nummer dat is opgeslagen in de lokale node database en dat het hoogste (meest recente) bevestigde block in een accountketen vertegenwoordigt. Gerelateerd aan (maar verschillend van) blockhoogte.",
     "blockHeight": "Een lokale integerwaarde die de volgorde van een block in een accountketen vertegenwoordigt. Het 15e block in een account heeft bijvoorbeeld een blockhoogte van 15. Gerelateerd aan (maar anders dan) bevestigingshoogte.",
     "bookmarks": "{{type, capitalize}} bladwijzers worden op uw apparaat opgeslagen. U kunt uw bekende {{type}}s beheren door ze aliassen te geven.",
@@ -90,7 +93,12 @@
     "versionsByWeight": "Om een versie de consensus van het netwerk te laten overnemen, moet deze {{onlineWeightQuorumPercent}}% van het online stemgewicht hebben van minimaal {{onlineWeightMinimum}} NANO.",
     "onChainVolume": "De som van alle NANO-transacties die op het netwerk zijn bevestigd. Als gebruiker A 1 NANO verzendt en gebruiker B 1 NANO op dezelfde dag ontvangt, wordt 2 NANO toegevoegd aan het dagelijkse volume omdat er 2 transacties zijn uitgezonden en bevestigd, een verzenden en een ontvangen.",
     "pendingTransactionCount": "Het aantal te ontvangen transacties overschrijdt de weergegeven limiet van {{count}}.",
-    "pendingTransaction": "Er is geld naar deze rekening gestuurd, maar de eigenaar heeft het geld nog niet op zak. Alleen de eigenaar van het account kan een ontvangen transactie in zijn blockchain schrijven. Als dit uw account is, ontgrendel dan uw portemonnee, het ontvangende blok wordt meestal automatisch uitgezonden."
+    "pendingTransaction": "Er is geld naar deze rekening gestuurd, maar de eigenaar heeft het geld nog niet op zak. Alleen de eigenaar van het account kan een ontvangen transactie in zijn blockchain schrijven. Als dit uw account is, ontgrendel dan uw portemonnee, het ontvangende blok wordt meestal automatisch uitgezonden.",
+    "socialStatistics": "Statistieken worden samengesteld met behulp van top 200 cryptocurrencies per marktkapitalisatie van CoinGecko.",
+    "dailyBalance": "Transactiegrafiek is alleen zichtbaar als het account meer dan 1 dag aan gegevens heeft en als de transacties tijdstempels hebben",
+    "senderFilter": "Filter blokken om alleen of alle verzendtransacties van een specifiek adres op te nemen of uit te sluiten. Om meerdere adressen te filteren, scheidt u ze met een komma.",
+    "receiverFilter": "Filter blokken om alleen of alle verzendtransacties van een specifiek adres op te nemen of uit te sluiten. Om meerdere adressen te filteren, scheidt u ze met een komma.",
+    "filterTransactions": "Alleen accounts met gelijk aan of minder dan 5.000 bevestigde transacties kunnen worden gefilterd"
   },
   "search": {
     "searchBy": "Zoeken op adres / block / bekend account",
@@ -171,19 +179,45 @@
     "account": {
       "votingWeight": "Stemgewicht",
       "percentNetworkVotingWeight": "% van het stemgewicht van het netwerk",
-      "percentRepresentativeVotingWeight": "% van het stemgewicht van de vertegenwoordiger",
       "noRepresentative": "Geen vertegenwoordiger",
       "confirmationHeight": "Bevestigingshoogte",
       "lastTransaction": "Laatste transactie",
       "loadMoreTransactions": "Laadt meer transacties",
       "viewTransactions": "Bekijk transacties",
-      "notOpenedYet": "Dit account is nog niet geopend",
-      "notOpenedYetReason": "Hoewel het accountadres geldig is, zijn er nog geen blocks naar het netwerk gepubliceerd. Als er NANO naar dit account is gestuurd, moet er nog een overeenkomstig ontvangst block worden gepubliceerd om het geld te ontvangen.",
       "missingAccount": "Account ontbreekt",
       "missingAccountInfo": "Het account is niet gespecificeerd in de URL. Gebruik de zoekbalk bovenaan om naar een account te zoeken of voeg deze toe aan de URL achter /account/",
       "notVoting": "Niet stemmen",
       "pendingTransactions": "Transacties klaar om te worden ontvangen",
-      "pendingTransaction": "Transactie klaar om te worden ontvangen"
+      "pendingTransaction": "Transactie klaar om te worden ontvangen",
+      "dailyBalanceOption": " Dagelijkse balans",
+      "byTransactionOption": "Saldo per transactie",
+      "dailyBalance": "Laatste {{count}} transacties",
+      "notOpenedYet": "Deze rekening heeft geen transacties",
+      "notOpenedYetReason": "Hoewel het account geldig is, zijn er nog geen blokken aan de keten toegevoegd. Als NANO naar dit account is verzonden, is het mogelijk dat de NanoLooker-node de transactie nog niet heeft ontvangen omdat de service die u gebruikt deze nog niet heeft uitgezonden of vanwege tijdelijke netwerkomstandigheden.",
+      "dateRange": "Datumbereik",
+      "includeNoTimestamp": "Blokken zonder datum opnemen",
+      "excludeUnknownAccounts": "Toon alleen blokken van bekende accounts",
+      "advancedOptions": "Geavanceerde mogelijkheden",
+      "applyFilters": "Filters toepassen",
+      "fields": "Velden",
+      "delimiter": "scheidingsteken",
+      "delimiterComma": "Komma",
+      "delimiterSemicolon": "Puntkomma",
+      "delimiterTab": "Tab",
+      "delimiterSpace": "Ruimte",
+      "delimiterPipe": "Pijp",
+      "fileName": "Bestandsnaam",
+      "minimum": "Minimum",
+      "maximum": "Maximaal",
+      "from": "Van",
+      "to": "Tot",
+      "startDate": "Startdatum",
+      "endDate": "Einddatum",
+      "exportToCsv": "Exporteren naar CSV",
+      "export": "Exporteren",
+      "exportTransactions": "Exporteer {{count}} transacties naar CSV",
+      "reverse": "Keer de transactievolgorde om",
+      "sumAmounts": "Tel de bedragen bij elkaar op"
     },
     "block": {
       "blockSubtype": "Block subtype",
@@ -200,7 +234,11 @@
       "missingBlock": "Ontbrekend block",
       "missingBlockInfo": "Het block is niet gespecificeerd in de URL. Gebruik de zoekbalk bovenaan om naar een block te zoeken of voeg het toe aan de URL na /block/",
       "blockNotFound": "Block niet gevonden",
-      "blockNotFoundInfo": "Het block dat u heeft aangevraagd, is niet gevonden. Het is mogelijk dat het block aanwezig is op het Nano netwerk, maar nog gezien moet worden door de node. Zorg ervoor dat u naar het juiste block zoekt of probeer het later opnieuw."
+      "blockNotFoundInfo": "Het block dat u heeft aangevraagd, is niet gevonden. Het is mogelijk dat het block aanwezig is op het Nano netwerk, maar nog gezien moet worden door de node. Zorg ervoor dat u naar het juiste block zoekt of probeer het later opnieuw.",
+      "successorBlock": "Opvolger blok",
+      "lastAccountBlock": "Dit blok is het meest recente op het account",
+      "matchingSendBlock": "Bijpassend verzendblok",
+      "noMatchingSendBlock": "Geen overeenkomend blok gevonden"
     },
     "representatives": {
       "voteDistribution": "Stemverdeling",
@@ -399,7 +437,11 @@
         "q": "Druk op Q of klik op de trofee om je Quest-boek te bekijken",
         "m": "Druk op M of klik op luidspreker om Dempen in te schakelen"
       },
-      "nanoPotions": "NANO-drankjes"
+      "nanoPotions": "NANO-drankjes",
+      "guide": {
+        "title": "NanoBrowserQuest-gids"
+      },
+      "playerGuide": "Spelersgids"
     },
     "statistics": {
       "social": {

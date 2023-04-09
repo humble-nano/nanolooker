@@ -19,13 +19,15 @@ import useDeveloperAccountFund from "api/hooks/use-developer-fund-transactions";
 import QuestionCircle from "components/QuestionCircle";
 import LoadingStatistic from "components/LoadingStatistic";
 import { rawToRai, timestampToDate } from "components/utils";
-import {
+import KnownAccounts from "../../knownAccounts.json";
+
+const {
   GENESIS_ACCOUNT,
   DEVELOPER_FUND_ACCOUNTS,
   ORIGINAL_DEVELOPER_FUND_BLOCK,
   ORIGINAL_DEVELOPER_FUND_BURN_BLOCK,
   ORIGINAL_DEVELOPER_FUND_ACCOUNT,
-} from "../../knownAccounts.json";
+} = KnownAccounts;
 
 const DEVELOPER_FUND_CHANGE_LINK =
   "https://medium.com/nanocurrency/announcement-changes-to-nano-foundation-development-fund-account-43f8f340a841";
@@ -39,18 +41,11 @@ const DeveloperFund: React.FC = () => {
   let totalBalance: number = 0;
   const { fiat } = React.useContext(PreferencesContext);
   const {
-    marketStatistics: {
-      currentPrice,
-      priceStats: { bitcoin: { [fiat]: btcCurrentPrice = 0 } } = {
-        bitcoin: { [fiat]: 0 },
-      },
-    },
+    marketStatistics: { currentPrice, priceStats },
     isInitialLoading: isMarketStatisticsInitialLoading,
   } = React.useContext(MarketStatisticsContext);
-  const {
-    accountsBalances,
-    isLoading: isAccountsBalancesLoading,
-  } = useAccountsBalances(DEVELOPER_FUND_ACCOUNTS);
+  const { accountsBalances, isLoading: isAccountsBalancesLoading } =
+    useAccountsBalances(DEVELOPER_FUND_ACCOUNTS);
   const { availableSupply } = useAvailableSupply();
   const { developerFundTransactions } = useDeveloperAccountFund();
   const isSmallAndLower = !useMediaQuery("(min-width: 576px)");
@@ -80,13 +75,16 @@ const DeveloperFund: React.FC = () => {
     ["desc"],
   );
 
+  const btcCurrentPrice = priceStats?.bitcoin?.[fiat] || 0;
   const fiatBalance = new BigNumber(totalBalance)
     .times(currentPrice)
     .toFormat(CurrencyDecimal?.[fiat]);
-  const btcBalance = new BigNumber(totalBalance)
-    .times(currentPrice)
-    .dividedBy(btcCurrentPrice)
-    .toFormat(12);
+  const btcBalance = btcCurrentPrice
+    ? new BigNumber(totalBalance)
+        .times(currentPrice)
+        .dividedBy(btcCurrentPrice)
+        .toFormat(12)
+    : null;
 
   const skeletonProps = {
     active: true,
@@ -94,8 +92,11 @@ const DeveloperFund: React.FC = () => {
     loading: isAccountsBalancesLoading || isMarketStatisticsInitialLoading,
   };
 
-  const { amount, local_timestamp = 0, hash: lastTransactionHash } =
-    developerFundTransactions?.[0] || {};
+  const {
+    amount,
+    local_timestamp = 0,
+    hash: lastTransactionHash,
+  } = developerFundTransactions?.[0] || {};
   const modifiedTimestamp = Number(local_timestamp) * 1000;
   const lastTransactionAmount = new BigNumber(rawToRai(amount || 0)).toNumber();
 
@@ -143,7 +144,9 @@ const DeveloperFund: React.FC = () => {
                   value={totalBalance}
                 />
                 <Skeleton {...skeletonProps}>
-                  {`${CurrencySymbol?.[fiat]}${fiatBalance} / ${btcBalance} BTC`}
+                  {`${CurrencySymbol?.[fiat]} ${fiatBalance}${
+                    btcBalance ? ` / ${btcBalance} BTC` : ""
+                  } `}
                 </Skeleton>
               </Col>
             </Row>
@@ -171,7 +174,7 @@ const DeveloperFund: React.FC = () => {
                   loading={!lastTransactionAmount}
                   paragraph={false}
                 >
-                  Ӿ{lastTransactionAmount}
+                  Ӿ {lastTransactionAmount}
                   <br />
                 </Skeleton>
                 <Skeleton
@@ -247,7 +250,7 @@ const DeveloperFund: React.FC = () => {
                 {t("common.balance")}
               </Col>
               <Col xs={24} sm={18}>
-                Ӿ{new BigNumber("7000000").toFormat()}
+                Ӿ {new BigNumber("7000000").toFormat()}
                 <br />
                 {t("pages.developerFund.percentOfTotal", {
                   percent: new BigNumber(7000000 * 100)
@@ -304,7 +307,7 @@ const DeveloperFund: React.FC = () => {
                   display: "block",
                 }}
               >
-                Ӿ{balance}
+                Ӿ {balance}
               </span>
             </Col>
             <Col sm={14} md={14} xl={18}>
